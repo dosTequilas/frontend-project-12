@@ -7,11 +7,14 @@
     "start": "cd frontend && react-scripts start",
     "build": "cd frontend && react-scripts build",
     "eject": "cd frontend && react-scripts eject"
-  },  
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@hexlet/chat-server": "^2.0.3",
     "react-scripts": "^5.0.1"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
   }
 }
