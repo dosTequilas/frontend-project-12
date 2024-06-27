@@ -12,7 +12,8 @@
   "license": "ISC",
   "dependencies": {
     "@hexlet/chat-server": "^2.0.3",
-    "react-scripts": "^5.0.1"
+    "react-dom": "^18.3.1",
+    "react-scripts": "^3.0.1"
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
