@@ -31,15 +31,16 @@ const Login = () => {
             onSubmit={async (values, { setSubmitting, setErrors }) => {
               try {
                 const response = await axios.post(
-                  "http://localhost:5001/api/v1/login", // вот тут в итоге 5000, 5001  или 3000?
+                  "/api/v1/login", // вот тут в итоге 5000, 5001  или 3000?
                   {
                     username: values.email,
                     password: values.password,
                   } // 1 пункт - отправляем форму с данными пользователя на сервер.
                 );
-                localStorage.setItem("token", response.data.token); // сохраняеи в локал сторадж/ token откуда взялся?
+                localStorage.setItem("token", response.data.token); // сохраняеи в локал сторадж/ token - это просто key.
                 setSubmitting(false);
                 navigate("/"); // Перенаправление на страницу чата
+                // добавить заголовок с токеном, сервер сравнивет.
               } catch (error) {
                 setErrors({ submit: "Invalid credentials" }); // очистка ошибок - оно нам надо?
                 setSubmitting(false);
