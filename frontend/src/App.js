@@ -17,6 +17,7 @@ function App() {
         <Route path="/" element={<PrivateRoute element={Home} />} />
         <Route path="/login" element={<Login />} />
         <Route path="*" element={<NotFound />} />
+        <Route path="chat" element={<PrivateRoute element={Chat} />} />
       </Routes>
     </BrowserRouter>
   );

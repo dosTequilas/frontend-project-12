@@ -3,6 +3,14 @@ build:
 	npm ci
 	npm run build
 
-# Команда для запуска сервера
+start-backend:
+	npx start-server
+
+start-frontend:
+	make -C frontend start
+
 start:
-	npm run start
+	make start-backend
+
+develop:
+	make start-backend & make start-frontend

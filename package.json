@@ -11,7 +11,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@hexlet/chat-server": "^2.0.3"
+    "@hexlet/chat-server": "^2.0.3",
+    "bootstrap-icons": "^1.11.3"
   },
-  "workspaces": ["frontend"]
+  "workspaces": [
+    "frontend"
+  ]
 }
