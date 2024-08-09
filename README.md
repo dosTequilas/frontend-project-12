@@ -2,9 +2,9 @@
 
 [![Actions Status](https://github.com/dosTequilas/frontend-project-12/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/dosTequilas/frontend-project-12/actions)
 
-# [Project Messenger](https://frontend-project-12-10x0.onrender.com/)
+# [Messenger](https://frontend-project-12-10x0.onrender.com/)
 
-Welcome to the **Project Messenger**! 🎉 This is a simple messenger application, similar to Slack, created to practice using React and routing. 🚀
+Welcome to the **Messenger**! 🎉 This is a simple messenger application, similar to Slack, created to practice using React and routing. 🚀
 
 ## Features ✨
 
@@ -32,7 +32,7 @@ To get a local copy up and running follow these simple steps:
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/yourusername/project-messenger.git
+   git clone https://github.com/dosTequilas/frontend-project-12.git
    ```
 2. Install NPM packages
    ```sh
