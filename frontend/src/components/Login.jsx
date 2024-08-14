@@ -4,16 +4,16 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setAuthData } from "../store/authSlice";
-import "bootstrap/dist/css/bootstrap.min.css";
+import { Container, Row, Col, Form, Button, Alert } from "react-bootstrap";
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   return (
-    <div className="container">
-      <div className="row justify-content-center">
-        <div className="col-md-6">
+    <Container>
+      <Row className="justify-content-center">
+        <Col md={6}>
           <h1>Login</h1>
           <Formik
             initialValues={{ username: "", password: "" }}
@@ -47,7 +47,6 @@ const Login = () => {
 
                 setSubmitting(false);
                 navigate("/Chat"); // Перенаправление на страницу чата
-                // добавить заголовок с токеном, сервер сравнивет.
               } catch (error) {
                 setErrors({ submit: "Invalid credentials" }); // очистка ошибок - оно нам надо?
                 setSubmitting(false);
@@ -63,51 +62,57 @@ const Login = () => {
               handleSubmit,
               isSubmitting,
             }) => (
-              <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                  <label>Username</label>
-                  <input
+              <Form onSubmit={handleSubmit}>
+                <Form.Group controlId="formUsername">
+                  <Form.Label>Username</Form.Label>
+                  <Form.Control
                     type="text"
                     name="username"
-                    className="form-control"
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    value={values.email}
+                    value={values.username}
+                    isInvalid={touched.username && !!errors.username}
                   />
-                  {errors.username && touched.username && (
-                    <div className="text-danger">{errors.username}</div>
-                  )}
-                </div>
-                <div className="form-group">
-                  <label>Password</label>
-                  <input
+                  <Form.Control.Feedback type="invalid">
+                    {errors.username}
+                  </Form.Control.Feedback>
+                </Form.Group>
+
+                <Form.Group controlId="formPassword" className="mt-3">
+                  <Form.Label>Password</Form.Label>
+                  <Form.Control
                     type="password"
                     name="password"
-                    className="form-control"
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.password}
+                    isInvalid={touched.password && !!errors.password}
                   />
-                  {errors.password && touched.password && (
-                    <div className="text-danger">{errors.password}</div>
-                  )}
-                </div>
+                  <Form.Control.Feedback type="invalid">
+                    {errors.password}
+                  </Form.Control.Feedback>
+                </Form.Group>
+
                 {errors.submit && (
-                  <div className="text-danger">{errors.submit}</div>
+                  <Alert variant="danger" className="mt-3">
+                    {errors.submit}
+                  </Alert>
                 )}
-                <button
+
+                <Button
                   type="submit"
-                  className="btn btn-primary"
+                  variant="primary"
+                  className="mt-4"
                   disabled={isSubmitting}
                 >
                   Submit
-                </button>
-              </form>
+                </Button>
+              </Form>
             )}
           </Formik>
-        </div>
-      </div>
-    </div>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
