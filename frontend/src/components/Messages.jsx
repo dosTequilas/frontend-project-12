@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Form, InputGroup, Button } from "react-bootstrap";
 
 const Messages = ({
@@ -8,6 +8,14 @@ const Messages = ({
   setNewMessage,
   handleSendMessage,
 }) => {
+  const messagesEndRef = useRef(null);
+
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
+
   // Отфильтровываем сообщения для текущего канала
   const filteredMessages = messages.filter((message) => {
     const messageChannelId =
@@ -23,13 +31,12 @@ const Messages = ({
         <p className="m-0">
           <b># {currentChannel ? currentChannel.name : "No Channel"}</b>
         </p>
-        <span className="text-muted">{filteredMessages.length} Сообщений</span>{" "}
-        {/* Отображаем количество отфильтрованных сообщений */}
+        <span className="text-muted">{filteredMessages.length} Сообщений</span>
       </div>
-
       <div
         id="messages-box"
         className="chat-messages overflow-auto px-5 flex-grow-1"
+        style={{ maxHeight: "70vh" }}
       >
         {filteredMessages.length > 0 ? (
           filteredMessages.map((message) => (
@@ -40,8 +47,8 @@ const Messages = ({
         ) : (
           <div>No messages available</div>
         )}
+        <div ref={messagesEndRef} />
       </div>
-
       <div className="mt-auto px-5 py-3">
         <Form noValidate onSubmit={handleSendMessage} className="py-1">
           <InputGroup>

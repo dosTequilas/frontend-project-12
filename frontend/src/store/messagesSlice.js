@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
+// создаем хуки для сообщений
 export const messagesApi = createApi({
   reducerPath: "messagesApi",
   baseQuery: fetchBaseQuery({
@@ -12,7 +13,6 @@ export const messagesApi = createApi({
       return headers;
     },
   }),
-  // tagTypes: ["Messages"],
   endpoints: (builder) => ({
     getMessages: builder.query({
       query: () => "/messages",

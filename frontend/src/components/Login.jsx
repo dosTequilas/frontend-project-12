@@ -4,7 +4,9 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setAuthData } from "../store/authSlice";
-import { Container, Row, Col, Form, Button, Alert } from "react-bootstrap";
+import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -28,6 +30,21 @@ const Login = () => {
               return errors;
             }}
             onSubmit={async (values, { setSubmitting, setErrors }) => {
+              // Проверка на наличие интернет-соединения
+              if (!navigator.onLine) {
+                toast.error("Ошибка соединения", {
+                  position: "bottom-right",
+                  autoClose: 5000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                });
+                setSubmitting(false);
+                return; // Останавливаем выполнение запроса, если нет соединения
+              }
+
               try {
                 const response = await axios.post("/api/v1/login", {
                   username: values.username,
@@ -35,8 +52,7 @@ const Login = () => {
                 });
 
                 localStorage.setItem("username", values.username); // сохраняем в local storage текущего пользователя
-                localStorage.setItem("token", response.data.token); // сохраняем в local storage token - это просто key.
-                console.log("Current Username:", values.username);
+                localStorage.setItem("token", response.data.token); // сохраняем в local storage token
 
                 dispatch(
                   setAuthData({
@@ -48,9 +64,18 @@ const Login = () => {
                 setSubmitting(false);
                 navigate("/Chat"); // Перенаправление на страницу чата
               } catch (error) {
-                setErrors({ submit: "Invalid credentials" }); // очистка ошибок - оно нам надо?
+                toast.error("Invalid credentials", {
+                  position: "bottom-right",
+                  autoClose: 5000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                });
+                setErrors({ submit: "Invalid credentials" });
                 setSubmitting(false);
-              } // 2 пункт - обработка ошибки авторизации.
+              }
             }}
           >
             {({
@@ -94,9 +119,9 @@ const Login = () => {
                 </Form.Group>
 
                 {errors.submit && (
-                  <Alert variant="danger" className="mt-3">
-                    {errors.submit}
-                  </Alert>
+                  <div className="mt-3">
+                    <p className="text-danger">{errors.submit}</p>
+                  </div>
                 )}
 
                 <Button

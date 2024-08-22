@@ -7,11 +7,11 @@ export const initializeApp = () => {
   // слушатели событий сервера
   const socket = io();
   socket.on("newMessage", (message) => {
-    const state = store.getState();
-    const currentChannel = state.chat.currentChannel;
-    if (message.channelId === currentChannel) {
-      store.dispatch(messagesApi.util.invalidateTags(["Messages"]));
-    }
+    store.dispatch(
+      messagesApi.util.updateQueryData("getMessages", undefined, (draft) => {
+        draft.push(message);
+      })
+    );
   });
 
   socket.on("newChannel", () => {

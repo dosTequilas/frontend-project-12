@@ -3,6 +3,7 @@ import authReducer from "./authSlice";
 import chatReducer from "./chatSlice";
 import { channelsApi } from "./channelSlice";
 import { messagesApi } from "./messagesSlice";
+import { thunk } from "redux-thunk";
 
 export const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ export const store = configureStore({
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
+      .concat(thunk)
       .concat(messagesApi.middleware)
       .concat(channelsApi.middleware),
 });

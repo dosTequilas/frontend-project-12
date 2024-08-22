@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useGetChannelsQuery } from "../store/channelSlice";
+import {
+  useGetChannelsQuery,
+  useAddChannelMutation,
+  useRemoveChannelMutation,
+  useRenameChannelMutation,
+} from "../store/channelSlice";
+import AddChannelModal from "./modals/AddChannelModal";
+import RenameChannelModal from "./modals/RenameChannelModal";
+import RemoveChannelModal from "./modals/RemoveChannelsModal";
 import {
   useGetMessagesQuery,
   useSendMessageMutation,
@@ -18,7 +26,12 @@ const ChatPage = () => {
   const [currentChannel, setCurrentChannel] = useState(null);
   const [newMessage, setNewMessage] = useState("");
 
-  //получаем данные от сервера через RTK Query
+  // состояние модальных окон
+  const [showAddChannelModal, setShowAddChannelModal] = useState(false);
+  const [showRenameChannelModal, setShowRenameChannelModal] = useState(false);
+  const [showRemoveChannelModal, setShowRemoveChannelModal] = useState(false);
+
+  //получаем данные от сервера через хуки RTK Query
   const { data: channels = [], isLoading: channelsLoading } =
     useGetChannelsQuery();
   const { data: messages = [], isLoading: messagesLoading } =
@@ -26,31 +39,41 @@ const ChatPage = () => {
 
   const dispatch = useDispatch();
   const [sendMessage] = useSendMessageMutation();
+  const [addChannel] = useAddChannelMutation();
+  const [removeChannel] = useRemoveChannelMutation();
+  const [renameChannel] = useRenameChannelMutation();
 
   // По умолчанию выбираем первый канал
   useEffect(() => {
-    if (channels.length > 0) {
-      setCurrentChannel(channels[0]);
+    if (channels.length > 0 && !currentChannel) {
+      setCurrentChannel(channels.find((channel) => channel.name === "General"));
     }
   }, [channels]);
 
-  // Обновление состояния сообщений
-  useEffect(() => {
-    socket.on("newMessage", (message) => {
-      dispatch(
-        messagesApi.util.updateQueryData("getMessages", undefined, (draft) => {
-          draft.push(message);
-        })
-      );
-    });
-
-    return () => {
-      socket.off("newMessage");
-    };
-  }, [dispatch]);
-
   const handleChannelChange = (channel) => {
     setCurrentChannel(channel); // Устанавливаем новый текущий канал
+  };
+
+  const handleChannelRemove = (channel) => {
+    if (currentChannel?.id === channel.id) {
+      setCurrentChannel(channels.find((c) => c.name === "General"));
+    }
+    dispatch(removeChannel(channel.id));
+  };
+
+  const handleChannelAdd = async (channelName) => {
+    try {
+      await addChannel({ name: channelName }).unwrap();
+      console.log("канал добавлен");
+      setShowAddChannelModal(false);
+    } catch (error) {
+      console.error("Failed to add channel:", error);
+    }
+  };
+
+  const handleChannelRename = (channelId, newName) => {
+    dispatch(renameChannel({ channelId, newName }));
+    setShowRenameChannelModal(null);
   };
 
   const handleSendMessage = async (e) => {
@@ -78,7 +101,9 @@ const ChatPage = () => {
       <Navbar bg="light" expand="lg" className="shadow-sm">
         <Container>
           <Navbar.Brand href="/">Hexlet Chat</Navbar.Brand>
-          <Button variant="primary">Выйти</Button>
+          <Button href="/" variant="primary">
+            Выйти
+          </Button>
         </Container>
       </Navbar>
 
@@ -92,6 +117,9 @@ const ChatPage = () => {
               channels={channels}
               currentChannel={currentChannel}
               setCurrentChannel={handleChannelChange}
+              setShowAddChannelModal={setShowAddChannelModal}
+              setShowRemoveChannelModal={handleChannelRemove}
+              setShowRenameChannelModal={setShowRenameChannelModal}
             />
           </Col>
           <Col md={10} className="p-0 h-100 d-flex flex-column">
@@ -105,6 +133,23 @@ const ChatPage = () => {
           </Col>
         </Row>
       </Container>
+      <AddChannelModal
+        show={showAddChannelModal}
+        onHide={() => setShowAddChannelModal(false)}
+        onAdd={handleChannelAdd}
+      />
+      <RenameChannelModal
+        show={showRenameChannelModal}
+        onHide={() => setShowRenameChannelModal(false)}
+        onRename={handleChannelRename}
+        currentChannel={currentChannel}
+      />
+      <RemoveChannelModal
+        show={showRemoveChannelModal}
+        onHide={() => setShowRemoveChannelModal(false)}
+        onRemove={handleChannelRemove}
+        currentChannel={currentChannel}
+      />
     </div>
   );
 };
