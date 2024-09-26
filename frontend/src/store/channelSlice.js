@@ -4,6 +4,7 @@ export const channelsApi = createApi({
   reducerPath: "channelsApi",
   baseQuery: fetchBaseQuery({
     baseUrl: "/api/v1",
+    tagTypes: ["Channels"],
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("token");
       if (token) {
@@ -15,19 +16,22 @@ export const channelsApi = createApi({
   endpoints: (builder) => ({
     getChannels: builder.query({
       query: () => "/channels",
+      providesTags: ["Channels"],
     }),
     addChannel: builder.mutation({
       query: (channelName) => ({
         url: "/channels",
         method: "POST",
-        body: { name: channelName },
+        body: channelName,
       }),
+      invalidatesTags: ["Channels"],
     }),
     removeChannel: builder.mutation({
       query: (channelId) => ({
         url: `/channels/${channelId}`,
         method: "DELETE",
       }),
+      invalidatesTags: ["Channels"],
     }),
     renameChannel: builder.mutation({
       query: ({ channelId, newName }) => ({
@@ -35,6 +39,7 @@ export const channelsApi = createApi({
         method: "PATCH",
         body: { name: newName },
       }),
+      invalidatesTags: ["Channels"], // Обновляет кэш данных каналов
     }),
   }),
 });

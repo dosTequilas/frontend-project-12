@@ -25,6 +25,6 @@ export const initializeApp = () => {
   });
 
   socket.on("renameChannel", () => {
-    store.dispatch(channelsApi.util.invalidateTags(["Channels"])());
+    store.dispatch(channelsApi.util.invalidateTags(["Channels"]));
   });
 };

@@ -7,16 +7,14 @@ const RemoveChannelModal = ({ show, onHide, onRemove, currentChannel }) => {
   };
 
   return (
-    <Modal show={show} onHide={onHide}>
+    <Modal show={show} onHide={onHide} centered>
       <Modal.Header closeButton>
         <Modal.Title>Удалить канал</Modal.Title>
       </Modal.Header>
-      <Modal.Body>
-        Вы уверены, что хотите удалить канал &quot;{currentChannel?.name}&quot;?
-      </Modal.Body>
+      <Modal.Body>Уверены?</Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={onHide}>
-          Отмена
+          Отменить
         </Button>
         <Button variant="danger" onClick={handleRemove}>
           Удалить

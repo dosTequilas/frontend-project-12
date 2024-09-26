@@ -1,11 +1,11 @@
 import React from "react";
+import { PlusSquare } from "react-bootstrap-icons";
 import {
   ListGroup,
   Button,
   ButtonGroup,
   Dropdown,
   DropdownButton,
-  DropdownItem,
 } from "react-bootstrap";
 
 const ChannelsList = ({
@@ -25,29 +25,37 @@ const ChannelsList = ({
           className="p-0 text-primary"
           onClick={() => setShowAddChannelModal(true)}
         >
-          +<i className="bi bi-plus-square"></i>
+          <PlusSquare />
         </Button>
       </div>
       <ListGroup variant="flush" className="overflow-auto flex-grow-1">
         {channels && channels.length > 0 ? (
           channels.map((channel) => (
-            <ListGroup.Item
+            <div
               key={channel.id}
-              action
-              active={currentChannel?.id === channel.id}
-              onClick={() => setCurrentChannel(channel)}
+              className="d-flex justify-content-between align-items-center"
             >
-              <span># {channel.name}</span>
+              <ListGroup.Item
+                action
+                active={currentChannel?.id === channel.id}
+                onClick={() => setCurrentChannel(channel)}
+                className="w-100"
+              >
+                # {channel.name}
+              </ListGroup.Item>
               {channel.name !== "general" && channel.name !== "random" && (
                 <DropdownButton
                   as={ButtonGroup}
                   variant="link"
                   title={<i className="bi bi-three-dots"></i>}
                   id={`dropdown-${channel.id}`}
-                  classname="ml-auto"
+                  className="ml-2"
                 >
                   <Dropdown.Item
-                    onClick={() => setShowRenameChannelModal(channel)}
+                    onClick={() => {
+                      console.log("Renaming channel:", channel);
+                      setShowRenameChannelModal(channel);
+                    }}
                   >
                     Rename
                   </Dropdown.Item>
@@ -58,7 +66,7 @@ const ChannelsList = ({
                   </Dropdown.Item>
                 </DropdownButton>
               )}
-            </ListGroup.Item>
+            </div>
           ))
         ) : (
           <ListGroup.Item>No channels available</ListGroup.Item>

@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import AddChannelModal from "./modals/AddChannelModal";
+import RenameChannelModal from "./modals/RenameChannelModal";
+import RemoveChannelModal from "./modals/RemoveChannelsModal";
+import { messagesApi } from "../store/messagesSlice";
+import { io } from "socket.io-client";
+import Messages from "./Messages";
+import ChannelsList from "./ChannelsList";
+import { Navbar, Button, Container, Row, Col } from "react-bootstrap";
 import {
   useGetChannelsQuery,
   useAddChannelMutation,
   useRemoveChannelMutation,
   useRenameChannelMutation,
 } from "../store/channelSlice";
-import AddChannelModal from "./modals/AddChannelModal";
-import RenameChannelModal from "./modals/RenameChannelModal";
-import RemoveChannelModal from "./modals/RemoveChannelsModal";
 import {
   useGetMessagesQuery,
   useSendMessageMutation,
 } from "../store/messagesSlice"; // хуки RTK query
-import { messagesApi } from "../store/messagesSlice";
-import { io } from "socket.io-client";
-import Messages from "./Messages";
-import ChannelsList from "./ChannelsList";
-import { Navbar, Button, Container, Row, Col } from "react-bootstrap";
 
 const socket = io("http://localhost:3000");
 
@@ -54,11 +54,15 @@ const ChatPage = () => {
     setCurrentChannel(channel); // Устанавливаем новый текущий канал
   };
 
-  const handleChannelRemove = (channel) => {
+  const handleChannelRemove = async (channel) => {
     if (currentChannel?.id === channel.id) {
       setCurrentChannel(channels.find((c) => c.name === "General"));
     }
-    dispatch(removeChannel(channel.id));
+    try {
+      await removeChannel(channel.id).unwrap();
+    } catch (err) {
+      console.error("Failed to remove channel: ", err);
+    }
   };
 
   const handleChannelAdd = async (channelName) => {
@@ -71,9 +75,19 @@ const ChatPage = () => {
     }
   };
 
-  const handleChannelRename = (channelId, newName) => {
-    dispatch(renameChannel({ channelId, newName }));
-    setShowRenameChannelModal(null);
+  const handleChannelRename = async (channelId, newName) => {
+    try {
+      if (!channelId) {
+        console.error("Channel ID is undefined");
+        return;
+      }
+      console.log("Renaming channel with ID:", channelId); // Логирование
+      const result = await renameChannel({ channelId, newName }).unwrap();
+      console.log("Rename successful:", result);
+      setShowRenameChannelModal(false);
+    } catch (err) {
+      console.error("Failed to rename channel:", err);
+    }
   };
 
   const handleSendMessage = async (e) => {
@@ -87,6 +101,7 @@ const ChatPage = () => {
       }).unwrap();
       setNewMessage("");
       dispatch(messagesApi.util.invalidateTags(["Messages"]));
+      // refetch();
     } catch (err) {
       console.error("Failed to send message:", err);
     }
@@ -137,13 +152,17 @@ const ChatPage = () => {
         show={showAddChannelModal}
         onHide={() => setShowAddChannelModal(false)}
         onAdd={handleChannelAdd}
+        channels={channels}
       />
       <RenameChannelModal
-        show={showRenameChannelModal}
+        show={showRenameChannelModal !== false}
         onHide={() => setShowRenameChannelModal(false)}
-        onRename={handleChannelRename}
-        currentChannel={currentChannel}
+        onRename={(newName) =>
+          handleChannelRename(showRenameChannelModal?.id, newName)
+        }
+        currentChannel={showRenameChannelModal}
       />
+
       <RemoveChannelModal
         show={showRemoveChannelModal}
         onHide={() => setShowRemoveChannelModal(false)}
