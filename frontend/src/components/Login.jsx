@@ -7,6 +7,7 @@ import { setAuthData } from "../store/authSlice";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -17,6 +18,11 @@ const Login = () => {
       <Row className="justify-content-center">
         <Col md={6}>
           <h1>Login</h1>
+          <h2>Авторизация</h2>
+          {/* Форма авторизации */}
+          <p>
+            Нет аккаунта? <Link to="/signup">Зарегистрироваться</Link>
+          </p>
           <Formik
             initialValues={{ username: "", password: "" }}
             validate={(values) => {

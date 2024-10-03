@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import Signup from "./components/Signup";
 import Login from "./components/Login";
 import NotFound from "./components/NotFound";
 import Chat from "./components/Chat";
@@ -19,6 +20,7 @@ function App() {
         <Routes>
           <Route path="/" element={<PrivateRoute element={Login} />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
           <Route path="*" element={<NotFound />} />
           <Route path="chat" element={<PrivateRoute element={Chat} />} />
         </Routes>

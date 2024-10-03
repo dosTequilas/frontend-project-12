@@ -2,8 +2,11 @@ import React from "react";
 import { Modal, Button } from "react-bootstrap";
 
 const RemoveChannelModal = ({ show, onHide, onRemove, currentChannel }) => {
+  console.log(currentChannel);
   const handleRemove = () => {
     onRemove(currentChannel);
+    //есть ощущение что эти три строки ввыше надо удалить и использовать функцию удаления которая там, по f12 (кстати как это все называется)
+    // при нажатии "отмена" в модалке удаление все равно происходит.
   };
 
   return (

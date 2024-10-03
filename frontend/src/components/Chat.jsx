@@ -58,6 +58,7 @@ const ChatPage = () => {
     if (currentChannel?.id === channel.id) {
       setCurrentChannel(channels.find((c) => c.name === "General"));
     }
+    setShowRemoveChannelModal(true);
     try {
       await removeChannel(channel.id).unwrap();
     } catch (err) {
