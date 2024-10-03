@@ -134,7 +134,7 @@ const ChatPage = () => {
               currentChannel={currentChannel}
               setCurrentChannel={handleChannelChange}
               setShowAddChannelModal={setShowAddChannelModal}
-              setShowRemoveChannelModal={handleChannelRemove}
+              setShowRemoveChannelModal={setShowRemoveChannelModal}
               setShowRenameChannelModal={setShowRenameChannelModal}
             />
           </Col>

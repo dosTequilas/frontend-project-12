@@ -29,6 +29,10 @@ const Signup = () => {
   };
 
   return (
+    // axios.post('/api/v1/signup', { username: 'newuser', password: '123456' }).then((response) => {
+    //   console.log(response.data); // => { token: ..., username: 'newuser' }
+    // });
+
     <div className="signup-page">
       <h2>Регистрация</h2>
       <Formik

@@ -50,6 +50,7 @@ const ChannelsList = ({
                   title={<i className="bi bi-three-dots"></i>}
                   id={`dropdown-${channel.id}`}
                   className="ml-2"
+                  onClick={() => setCurrentChannel(channel)}
                 >
                   <Dropdown.Item
                     onClick={() => {
