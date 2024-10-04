@@ -61,6 +61,7 @@ const ChannelsList = ({
                     Rename
                   </Dropdown.Item>
                   <Dropdown.Item
+                    //использование setShow
                     onClick={() => setShowRemoveChannelModal(channel)}
                   >
                     Remove

@@ -26,7 +26,8 @@ const ChatPage = () => {
   const [currentChannel, setCurrentChannel] = useState(null);
   const [newMessage, setNewMessage] = useState("");
 
-  // состояние модальных окон
+  // создаем модальные окна с помощью хука useState.
+  // show... - это состояние, setShow - это функция для управления состоянием
   const [showAddChannelModal, setShowAddChannelModal] = useState(false);
   const [showRenameChannelModal, setShowRenameChannelModal] = useState(false);
   const [showRemoveChannelModal, setShowRemoveChannelModal] = useState(false);
