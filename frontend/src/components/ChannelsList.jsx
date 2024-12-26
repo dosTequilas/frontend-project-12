@@ -7,8 +7,9 @@ import {
   Dropdown,
   DropdownButton,
 } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 
-const ChannelsList = ({
+export const ChannelsList = ({
   channels,
   currentChannel,
   setCurrentChannel,
@@ -16,10 +17,13 @@ const ChannelsList = ({
   setShowRemoveChannelModal,
   setShowRenameChannelModal,
 }) => {
+  //i18n
+  const { t } = useTranslation();
+
   return (
     <div>
       <div className="d-flex mt-1 justify-content-between mb-2 p-4">
-        <b>Каналы</b>
+        <b>{t("channels")}</b>
         <Button
           variant="link"
           className="p-0 text-primary"
@@ -33,7 +37,7 @@ const ChannelsList = ({
           channels.map((channel) => (
             <div
               key={channel.id}
-              className="d-flex justify-content-between align-items-center"
+              className="d-flex justify-content-between align-items-center channel-name"
             >
               <ListGroup.Item
                 action
@@ -53,29 +57,27 @@ const ChannelsList = ({
                   onClick={() => setCurrentChannel(channel)}
                 >
                   <Dropdown.Item
+                    //использование setShow
+                    onClick={() => setShowRemoveChannelModal(channel)}
+                  >
+                    {t("remove")}
+                  </Dropdown.Item>
+                  <Dropdown.Item
                     onClick={() => {
                       console.log("Renaming channel:", channel);
                       setShowRenameChannelModal(channel);
                     }}
                   >
-                    Rename
-                  </Dropdown.Item>
-                  <Dropdown.Item
-                    //использование setShow
-                    onClick={() => setShowRemoveChannelModal(channel)}
-                  >
-                    Remove
+                    {t("rename")}
                   </Dropdown.Item>
                 </DropdownButton>
               )}
             </div>
           ))
         ) : (
-          <ListGroup.Item>No channels available</ListGroup.Item>
+          <ListGroup.Item>{t("noChannelsAvailable")}</ListGroup.Item>
         )}
       </ListGroup>
     </div>
   );
 };
-
-export default ChannelsList;

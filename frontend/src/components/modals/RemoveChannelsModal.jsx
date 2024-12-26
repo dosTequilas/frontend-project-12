@@ -1,5 +1,6 @@
 import React from "react";
 import { Modal, Button } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 
 const RemoveChannelModal = ({ show, onHide, onRemove, currentChannel }) => {
   console.log(currentChannel);
@@ -8,18 +9,20 @@ const RemoveChannelModal = ({ show, onHide, onRemove, currentChannel }) => {
     onHide();
   };
 
+  const { t } = useTranslation();
+
   return (
     <Modal show={show} onHide={onHide} centered>
       <Modal.Header closeButton>
-        <Modal.Title>Удалить канал</Modal.Title>
+        <Modal.Title>{t("deleteChannel")}</Modal.Title>
       </Modal.Header>
-      <Modal.Body>Уверены?</Modal.Body>
+      <Modal.Body>{t("sure")}</Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={onHide}>
-          Отменить
+          {t("cancel")}
         </Button>
         <Button variant="danger" onClick={handleRemove}>
-          Удалить
+          {t("remove")}
         </Button>
       </Modal.Footer>
     </Modal>

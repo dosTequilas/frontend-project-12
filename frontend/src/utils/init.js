@@ -2,6 +2,7 @@ import { io } from "socket.io-client";
 import { store } from "../store/store";
 import { messagesApi } from "../store/messagesSlice";
 import { channelsApi } from "../store/channelSlice";
+import "../i18n"; // импорт для инициализации i18
 
 export const initializeApp = () => {
   // слушатели событий сервера

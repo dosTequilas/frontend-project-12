@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import { Formik } from "formik";
+import { useTranslation } from "react-i18next";
 
 const RenameChannelModal = ({ show, onHide, onRename, currentChannel }) => {
   const inputRef = useRef(null);
@@ -10,6 +11,8 @@ const RenameChannelModal = ({ show, onHide, onRename, currentChannel }) => {
       inputRef.current.focus();
     }
   }, [show]);
+  //i18n
+  const { t } = useTranslation();
 
   return (
     <Modal show={show} onHide={onHide} centered>
@@ -27,7 +30,6 @@ const RenameChannelModal = ({ show, onHide, onRename, currentChannel }) => {
           {({ handleChange, handleBlur, handleSubmit, values }) => (
             <Form onSubmit={handleSubmit}>
               <Form.Group controlId="formChannelName">
-                <Form.Label>Channel Name</Form.Label>
                 <Form.Control
                   type="text"
                   name="channelName"
@@ -39,12 +41,14 @@ const RenameChannelModal = ({ show, onHide, onRename, currentChannel }) => {
                   autoFocus
                 />
               </Form.Group>
-              <Button variant="secondary" onClick={onHide}>
-                Отменить
-              </Button>
-              <Button variant="primary" type="submit">
-                Переименовать
-              </Button>
+              <div className="d-flex justify-content-end mt-3">
+                <Button variant="secondary" onClick={onHide} className="me-2">
+                  {t("cancel")}
+                </Button>
+                <Button variant="primary" type="submit">
+                  {t("send")}
+                </Button>
+              </div>
             </Form>
           )}
         </Formik>

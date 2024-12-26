@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { Form, InputGroup, Button } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 
 const Messages = ({
   messages,
@@ -25,13 +26,19 @@ const Messages = ({
     return messageChannelId === currentChannel?.id;
   });
 
+  //i18n
+  const { t } = useTranslation();
+
   return (
     <div className="d-flex flex-column h-100">
       <div className="bg-light mb-4 p-3 shadow-sm">
         <p className="m-0">
           <b># {currentChannel ? currentChannel.name : "No Channel"}</b>
         </p>
-        <span className="text-muted">{filteredMessages.length} Сообщений</span>
+        <span className="text-muted">
+          {filteredMessages.length}
+          {t("messages")}
+        </span>
       </div>
       <div
         id="messages-box"
@@ -45,7 +52,7 @@ const Messages = ({
             </div>
           ))
         ) : (
-          <div>No messages available</div>
+          <div>{t("noMessages")}</div>
         )}
         <div ref={messagesEndRef} />
       </div>
@@ -75,7 +82,7 @@ const Messages = ({
                   d="M1.5 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 1 1-.708-.708L13.793 8.5H2a.5.5 0 0 1-.5-.5z"
                 />
               </svg>
-              <span className="visually-hidden">Отправить</span>
+              <span className="visually-hidden">{t("send")}</span>
             </Button>
           </InputGroup>
         </Form>

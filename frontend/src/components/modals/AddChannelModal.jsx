@@ -2,6 +2,7 @@ import React from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import { Formik } from "formik";
 import * as yup from "yup";
+import { useTranslation } from "react-i18next";
 
 const channelSchema = yup.object().shape({
   name: yup
@@ -14,10 +15,12 @@ const channelSchema = yup.object().shape({
 const AddChannelModal = ({ show, onHide, onAdd, channels }) => {
   const channelNames = channels.map((channel) => channel.name);
 
+  const { t } = useTranslation();
+
   return (
     <Modal show={show} onHide={onHide}>
       <Modal.Header closeButton>
-        <Modal.Title>Add New Channel</Modal.Title>
+        <Modal.Title>{t("addChannel")}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Formik
@@ -44,7 +47,6 @@ const AddChannelModal = ({ show, onHide, onAdd, channels }) => {
           }) => (
             <Form onSubmit={handleSubmit}>
               <Form.Group controlId="formChannelName">
-                <Form.Label>Channel Name</Form.Label>
                 <Form.Control
                   type="text"
                   name="name"
@@ -59,9 +61,14 @@ const AddChannelModal = ({ show, onHide, onAdd, channels }) => {
                   {errors.name}
                 </Form.Control.Feedback>
               </Form.Group>
-              <Button variant="primary" type="submit" disabled={isSubmitting}>
-                Add Channel
-              </Button>
+              <div className="d-flex justify-content-end mt-3">
+                <Button variant="secondary" onClick={onHide} className="me-2">
+                  {t("cancel")}
+                </Button>
+                <Button variant="primary" type="submit" disabled={isSubmitting}>
+                  {t("send")}
+                </Button>
+              </div>
             </Form>
           )}
         </Formik>

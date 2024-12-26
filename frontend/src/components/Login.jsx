@@ -8,20 +8,22 @@ import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const Login = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   return (
-    <Container>
+    <Container className="my-4">
       <Row className="justify-content-center">
         <Col md={6}>
-          <h1>Login</h1>
-          <h2>Авторизация</h2>
+          <h1>{t("login")}</h1>
           {/* Форма авторизации */}
           <p>
-            Нет аккаунта? <Link to="/signup">Зарегистрироваться</Link>
+            {t("dontHaveAnAccount")}
+            <Link to="/signup">{t("register")}</Link>
           </p>
           <Formik
             initialValues={{ username: "", password: "" }}
@@ -56,9 +58,6 @@ const Login = () => {
                   username: values.username,
                   password: values.password,
                 });
-
-                localStorage.setItem("username", values.username); // сохраняем в local storage текущего пользователя
-                localStorage.setItem("token", response.data.token); // сохраняем в local storage token
 
                 dispatch(
                   setAuthData({
@@ -95,7 +94,7 @@ const Login = () => {
             }) => (
               <Form onSubmit={handleSubmit}>
                 <Form.Group controlId="formUsername">
-                  <Form.Label>Username</Form.Label>
+                  <Form.Label>{t("username")}</Form.Label>
                   <Form.Control
                     type="text"
                     name="username"
@@ -110,7 +109,7 @@ const Login = () => {
                 </Form.Group>
 
                 <Form.Group controlId="formPassword" className="mt-3">
-                  <Form.Label>Password</Form.Label>
+                  <Form.Label>{t("password")}</Form.Label>
                   <Form.Control
                     type="password"
                     name="password"
@@ -136,7 +135,7 @@ const Login = () => {
                   className="mt-4"
                   disabled={isSubmitting}
                 >
-                  Submit
+                  {t("enter")}
                 </Button>
               </Form>
             )}

@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setSelectedChannelId } from "../store/uiSlice";
 import AddChannelModal from "./modals/AddChannelModal";
 import RenameChannelModal from "./modals/RenameChannelModal";
 import RemoveChannelModal from "./modals/RemoveChannelsModal";
 import { messagesApi } from "../store/messagesSlice";
 import { io } from "socket.io-client";
 import Messages from "./Messages";
-import ChannelsList from "./ChannelsList";
-import { Navbar, Button, Container, Row, Col } from "react-bootstrap";
+import { ChannelsList } from "./ChannelsList";
+import { Container, Row, Col } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify";
+import Filter from "leo-profanity";
+
 import {
   useGetChannelsQuery,
   useAddChannelMutation,
@@ -18,6 +23,11 @@ import {
   useGetMessagesQuery,
   useSendMessageMutation,
 } from "../store/messagesSlice"; // хуки RTK query
+
+// const Filter = require("leo-profanity");
+
+//добавляем русский словарь
+Filter.loadDictionary("ru");
 
 const socket = io("http://localhost:3000");
 
@@ -44,7 +54,8 @@ const ChatPage = () => {
   const [removeChannel] = useRemoveChannelMutation();
   const [renameChannel] = useRenameChannelMutation();
 
-  // По умолчанию выбираем первый канал
+  // useEffect с пустым массивом = component did mount. - еще до смены каналов будет выбранный канал.–
+  // По умолчанию выбираем первый канал при изменении каналов.
   useEffect(() => {
     if (channels.length > 0 && !currentChannel) {
       setCurrentChannel(channels.find((channel) => channel.name === "General"));
@@ -54,7 +65,7 @@ const ChatPage = () => {
   const handleChannelChange = (channel) => {
     setCurrentChannel(channel); // Устанавливаем новый текущий канал
   };
-
+  const { t } = useTranslation();
   const handleChannelRemove = async (channel) => {
     if (currentChannel?.id === channel.id) {
       setCurrentChannel(channels.find((c) => c.name === "General"));
@@ -62,15 +73,17 @@ const ChatPage = () => {
     setShowRemoveChannelModal(true);
     try {
       await removeChannel(channel.id).unwrap();
+      toast.success(t("deleted"));
     } catch (err) {
       console.error("Failed to remove channel: ", err);
     }
   };
 
   const handleChannelAdd = async (channelName) => {
+    setCurrentChannel(channelName);
     try {
       await addChannel({ name: channelName }).unwrap();
-      console.log("канал добавлен");
+      toast.success(t("added"));
       setShowAddChannelModal(false);
     } catch (error) {
       console.error("Failed to add channel:", error);
@@ -86,6 +99,7 @@ const ChatPage = () => {
       console.log("Renaming channel with ID:", channelId); // Логирование
       const result = await renameChannel({ channelId, newName }).unwrap();
       console.log("Rename successful:", result);
+      toast.success(t("renamed"));
       setShowRenameChannelModal(false);
     } catch (err) {
       console.error("Failed to rename channel:", err);
@@ -95,9 +109,19 @@ const ChatPage = () => {
   const handleSendMessage = async (e) => {
     e.preventDefault();
     if (!newMessage.trim()) return;
+
+    // Проверка на наличие выбранного канала
+    if (!currentChannel) {
+      console.error("No channel selected");
+      return;
+    }
+
+    // Фильтрация сообщения
+    const cleanMessage = Filter.clean(newMessage);
+
     try {
       await sendMessage({
-        body: newMessage,
+        body: cleanMessage,
         channelId: currentChannel.id,
         username: localStorage.getItem("username"),
       }).unwrap();
@@ -115,15 +139,6 @@ const ChatPage = () => {
 
   return (
     <div className="h-100">
-      <Navbar bg="light" expand="lg" className="shadow-sm">
-        <Container>
-          <Navbar.Brand href="/">Hexlet Chat</Navbar.Brand>
-          <Button href="/" variant="primary">
-            Выйти
-          </Button>
-        </Container>
-      </Navbar>
-
       <Container className="h-100 my-4 overflow-hidden rounded shadow">
         <Row className="h-100">
           <Col
@@ -176,3 +191,7 @@ const ChatPage = () => {
 };
 
 export default ChatPage;
+
+// поправить отступ сверху - готово (className my-4)
+// обрезать длинные названия css
+// ui state меняется после запроса - redux
