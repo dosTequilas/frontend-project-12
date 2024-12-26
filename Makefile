@@ -1,6 +1,4 @@
-# Команда для сборки фронтенда
 build:
-	npm ci
 	npm run build
 
 start-backend:
@@ -14,3 +12,6 @@ start:
 
 develop:
 	make start-backend & make start-frontend
+
+install:
+	npm ci 
