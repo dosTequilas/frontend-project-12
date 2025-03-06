@@ -13,11 +13,7 @@ import { Provider, ErrorBoundary } from "@rollbar/react";
 const PrivateRoute = ({ element: Element }) => {
   const isAuthenticated = () => !!localStorage.getItem("token");
   return isAuthenticated() ? <Element /> : <Navigate to="/login" />;
-}; // 3 пункт - проверка существования токена в локал сторадж
-
-// function BuggyComponent() {
-//   throw new Error("Test error.");
-// }
+};
 
 const rollbarConfig = {
   accessToken: "fd62798c6e0a4b73aa87e9fe69dd5ecb", //токены в env файл и тут доставать
