@@ -54,7 +54,7 @@ const AddChannelModal = ({ show, onHide, onAdd, channels }) => {
                   onBlur={handleBlur}
                   value={values.name}
                   isInvalid={touched.name && !!errors.name}
-                  placeholder="Enter channel name"
+                  placeholder={t("channelNamePlaceholder")}
                   autoFocus
                 />
                 <Form.Control.Feedback type="invalid">
