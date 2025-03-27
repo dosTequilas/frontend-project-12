@@ -5,7 +5,7 @@ import matchers from "@testing-library/jest-dom/matchers";
 const uiSlice = createSlice({
   name: "ui",
   initialState: {
-    selectedChannelId: 1,
+    selectedChannelId: null,
   },
   reducers: {
     setSelectedChannelId: (state, action) => {
@@ -22,6 +22,7 @@ const uiSlice = createSlice({
     builder.addMatcher(
       channelsApi.endpoints.addChannel.matchFulfilled,
       (state, action) => {
+        console.log("action: ", action);
         // state.selectedChannelId = action.payload;
       }
     );

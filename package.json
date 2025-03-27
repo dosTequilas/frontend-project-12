@@ -4,7 +4,7 @@
   "description": "[![Actions Status](https://github.com/dosTequilas/frontend-project-12/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/dosTequilas/frontend-project-12/actions)",
   "main": "index.js",
   "scripts": {
-    "start": "npx start-server -s frontend/build --port 5003",
+    "start": "npx start-server -s frontend/build",
     "build": "npm run build --prefix frontend",
     "eject": "cd frontend && react-scripts eject"
   },
@@ -25,6 +25,6 @@
     "@playwright/test": "^1.50.1"
   },
   "scripts": {
-  "test:e2e": "npx playwright test --reporter=html --trace on"
+  "test:e2e": "npx playwright test"
 }
 }

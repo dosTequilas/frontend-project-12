@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { createSlice } from "@reduxjs/toolkit";
 
 export const channelsApi = createApi({
   reducerPath: "channelsApi",
@@ -23,7 +22,7 @@ export const channelsApi = createApi({
       query: (channelName) => ({
         url: "/channels",
         method: "POST",
-        body: { name: channelName },
+        body: channelName,
       }),
       invalidatesTags: ["Channels"],
     }),
@@ -51,20 +50,3 @@ export const {
   useRemoveChannelMutation,
   useRenameChannelMutation,
 } = channelsApi;
-
-const initialState = {
-  selectedChannelId: "1",
-};
-
-const channelSlice = createSlice({
-  name: "channels",
-  initialState,
-  reducers: {
-    setSelectedChannel(state, action) {
-      state.selectedChannelId = String(action.payload);
-    },
-  },
-});
-
-export const { setSelectedChannel } = channelSlice.actions;
-export default channelSlice.reducer;

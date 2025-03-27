@@ -62,7 +62,7 @@ const Messages = ({
             <Form.Control
               type="text"
               name="body"
-              aria-label="Новое сообщение"
+              aria-label="Новое Сообщение"
               placeholder="Введите сообщение..."
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}

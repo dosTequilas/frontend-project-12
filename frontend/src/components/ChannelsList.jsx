@@ -30,7 +30,6 @@ export const ChannelsList = ({
           onClick={() => setShowAddChannelModal(true)}
         >
           <PlusSquare />
-          <span className="visually-hidden">+</span>
         </Button>
       </div>
       <ListGroup variant="flush" className="overflow-auto flex-grow-1">
