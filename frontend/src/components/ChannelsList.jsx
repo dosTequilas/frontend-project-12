@@ -25,10 +25,11 @@ export const ChannelsList = ({
       <div className="d-flex mt-1 justify-content-between mb-2 p-4">
         <b>{t("channels")}</b>
         <Button
-          variant="link"
+          type="button"
           className="p-0 text-primary"
           onClick={() => setShowAddChannelModal(true)}
         >
+          <span className="visually-hidden">+</span>
           <PlusSquare />
         </Button>
       </div>

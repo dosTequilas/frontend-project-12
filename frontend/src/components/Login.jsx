@@ -94,30 +94,36 @@ const Login = () => {
             }) => (
               <Form onSubmit={handleSubmit}>
                 <Form.Group controlId="formUsername">
-                  <Form.Label>{t("username")}</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="username"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={values.username}
-                    isInvalid={touched.username && !!errors.username}
-                  />
+                  <Form.Label>
+                    {t("username")}
+                    <Form.Control
+                      type="text"
+                      name="username"
+                      placeholder={t("username")}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.username}
+                      isInvalid={touched.username && !!errors.username}
+                    />
+                  </Form.Label>
                   <Form.Control.Feedback type="invalid">
                     {errors.username}
                   </Form.Control.Feedback>
                 </Form.Group>
 
                 <Form.Group controlId="formPassword" className="mt-3">
-                  <Form.Label>{t("password")}</Form.Label>
-                  <Form.Control
-                    type="password"
-                    name="password"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={values.password}
-                    isInvalid={touched.password && !!errors.password}
-                  />
+                  <Form.Label>
+                    {t("password")}
+                    <Form.Control
+                      type="password"
+                      name="password"
+                      placeholder={t("password")}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.password}
+                      isInvalid={touched.password && !!errors.password}
+                    />
+                  </Form.Label>
                   <Form.Control.Feedback type="invalid">
                     {errors.password}
                   </Form.Control.Feedback>
