@@ -31,15 +31,18 @@ const RenameChannelModal = ({ show, onHide, onRename, currentChannel }) => {
             <Form onSubmit={handleSubmit}>
               <Form.Group controlId="formChannelName">
                 <Form.Control
+                  id="channelName"
                   type="text"
                   name="channelName"
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.channelName}
                   ref={inputRef} // используем ref для фокуса
-                  placeholder={t("addNamePlaceholder")}
                   autoFocus
                 />
+                <label htmlFor="channelName" className="visually-hidden">
+                  {t("addNamePlaceholder")}
+                </label>
               </Form.Group>
               <div className="d-flex justify-content-end mt-3">
                 <Button variant="secondary" onClick={onHide} className="me-2">

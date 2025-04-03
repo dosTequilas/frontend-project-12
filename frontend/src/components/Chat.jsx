@@ -39,7 +39,7 @@ const ChatPage = () => {
     useGetMessagesQuery();
 
   // создаем состояние в компоненте, null потому что канал не выбран
-  const [currentChannel, setCurrentChannel] = useState(channels[0]);
+  const [currentChannel, setCurrentChannel] = useState(null);
   const [newMessage, setNewMessage] = useState("");
 
   // создаем модальные окна с помощью хука useState.
@@ -54,11 +54,11 @@ const ChatPage = () => {
   const [removeChannel] = useRemoveChannelMutation();
   const [renameChannel] = useRenameChannelMutation();
 
-  // useEffect с пустым массивом = component did mount. - еще до смены каналов будет выбранный канал.–
+  // useEffect с пустым массивом = component did mount. - еще до смены каналов будет выбранный канал.
   // По умолчанию выбираем первый канал при изменении каналов.
   useEffect(() => {
     if (channels.length > 0 && !currentChannel) {
-      setCurrentChannel(channels.find((channel) => channel.name === "General"));
+      setCurrentChannel(channels[0]);
     }
   }, [channels]);
 
