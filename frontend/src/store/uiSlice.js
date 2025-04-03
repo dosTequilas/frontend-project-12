@@ -23,7 +23,7 @@ const uiSlice = createSlice({
       channelsApi.endpoints.addChannel.matchFulfilled,
       (state, action) => {
         console.log("action: ", action);
-        // state.selectedChannelId = action.payload;
+        state.selectedChannelId = action.payload.id;
       }
     );
   },

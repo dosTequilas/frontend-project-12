@@ -26,6 +26,7 @@ export const ChannelsList = ({
         <b>{t("channels")}</b>
         <Button
           type="button"
+          variant="group-vertical"
           className="p-0 text-primary"
           onClick={() => setShowAddChannelModal(true)}
         >

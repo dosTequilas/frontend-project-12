@@ -1,7 +1,7 @@
 {
   "login": "Войти",
   "dontHaveAnAccount": "Нет аккаунта? ",
-  "register": "Зарегистрироваться",
+  "register": "Регистрация",
   "username": "Ваш ник",
   "password": "Пароль",
   "enter": "Войти",
@@ -27,5 +27,6 @@
   "sure": "Уверены?",
   "deleted": "Канал удален",
   "added": "Канал добавлен",
-  "renamed": "Канал переименован"
+  "renamed": "Канал переименован",
+  "addNamePlaceholder": "Имя канала"
 }
