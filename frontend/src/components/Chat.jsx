@@ -32,8 +32,14 @@ Filter.loadDictionary("ru");
 const socket = io("http://localhost:3000");
 
 const ChatPage = () => {
+  //получаем данные от сервера через хуки RTK Query
+  const { data: channels = [], isLoading: channelsLoading } =
+    useGetChannelsQuery();
+  const { data: messages = [], isLoading: messagesLoading } =
+    useGetMessagesQuery();
+
   // создаем состояние в компоненте, null потому что канал не выбран
-  const [currentChannel, setCurrentChannel] = useState(null);
+  const [currentChannel, setCurrentChannel] = useState(channels[0]);
   const [newMessage, setNewMessage] = useState("");
 
   // создаем модальные окна с помощью хука useState.
@@ -41,12 +47,6 @@ const ChatPage = () => {
   const [showAddChannelModal, setShowAddChannelModal] = useState(false);
   const [showRenameChannelModal, setShowRenameChannelModal] = useState(false);
   const [showRemoveChannelModal, setShowRemoveChannelModal] = useState(false);
-
-  //получаем данные от сервера через хуки RTK Query
-  const { data: channels = [], isLoading: channelsLoading } =
-    useGetChannelsQuery();
-  const { data: messages = [], isLoading: messagesLoading } =
-    useGetMessagesQuery();
 
   const dispatch = useDispatch();
   const [sendMessage] = useSendMessageMutation();
