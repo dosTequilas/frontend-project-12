@@ -1,1 +1,0 @@
-0{"sid":"3xqnA04Mtl7Ofk02AAHC","upgrades":["websocket"],"pingInterval":25000,"pingTimeout":20000,"maxPayload":1000000}

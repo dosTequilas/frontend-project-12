@@ -37,7 +37,7 @@ const RenameChannelModal = ({ show, onHide, onRename, currentChannel }) => {
                   onBlur={handleBlur}
                   value={values.channelName}
                   ref={inputRef} // используем ref для фокуса
-                  placeholder="Enter channel name"
+                  placeholder={t("addNamePlaceholder")}
                   autoFocus
                 />
               </Form.Group>
