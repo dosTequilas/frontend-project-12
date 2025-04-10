@@ -50,35 +50,34 @@ export const ChannelsList = ({
                 # {channel.name}
               </ListGroup.Item>
               {channel.name !== "general" && channel.name !== "random" && (
-                <DropdownButton
-                  as={ButtonGroup}
-                  variant="link"
-                  title={<i className="bi bi-three-dots"></i>}
-                  id={`dropdown-${channel.id}`}
-                  className="ml-2"
-                  onClick={() => setCurrentChannel(channel)}
-                >
-                  <label
-                    htmlFor={`dropdown-${channel.id}`}
-                    classname="visually-hidden"
+                <Dropdown>
+                  <Dropdown.Toggle
+                    as={ButtonGroup}
+                    variant="link"
+                    title={<i className="bi bi-three-dots"></i>}
+                    id={`dropdown-${channel.id}`}
+                    className="ml-2"
                   >
-                    {t("channelControl")}
-                  </label>
-                  <Dropdown.Item
-                    //использование setShow
-                    onClick={() => setShowRemoveChannelModal(channel)}
-                  >
-                    {t("remove")}
-                  </Dropdown.Item>
-                  <Dropdown.Item
-                    onClick={() => {
-                      console.log("Renaming channel:", channel);
-                      setShowRenameChannelModal(channel);
-                    }}
-                  >
-                    {t("rename")}
-                  </Dropdown.Item>
-                </DropdownButton>
+                    <label className="visually-hidden">
+                      {t("channelControl")}
+                    </label>
+                  </Dropdown.Toggle>
+
+                  <Dropdown.Menu>
+                    <Dropdown.Item
+                      onClick={() => setShowRemoveChannelModal(channel)}
+                    >
+                      {t("remove")}
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                      onClick={() => {
+                        setShowRenameChannelModal(channel);
+                      }}
+                    >
+                      {t("rename")}
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
               )}
             </div>
           ))
