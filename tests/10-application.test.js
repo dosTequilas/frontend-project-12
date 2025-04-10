@@ -15,7 +15,7 @@ const newUser = {
 
 test.beforeEach(async ({ page }) => {
   await page.goto("http://localhost:3000");
-  await page.waitForTimeout(300);
+  await page.waitForTimeout(30);
 
   await page.locator("text=Hexlet Chat").first().click();
 });

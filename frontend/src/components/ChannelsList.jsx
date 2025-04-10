@@ -8,6 +8,7 @@ import {
   DropdownButton,
 } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
+import SplitButton from "react-bootstrap/SplitButton";
 
 export const ChannelsList = ({
   channels,
@@ -51,13 +52,7 @@ export const ChannelsList = ({
               </ListGroup.Item>
               {channel.name !== "general" && channel.name !== "random" && (
                 <Dropdown>
-                  <Dropdown.Toggle
-                    as={ButtonGroup}
-                    variant="link"
-                    title={<i className="bi bi-three-dots"></i>}
-                    id={`dropdown-${channel.id}`}
-                    className="ml-2"
-                  >
+                  <Dropdown.Toggle split className="flex-grow-0" variant="down">
                     <label className="visually-hidden">
                       {t("channelControl")}
                     </label>

@@ -30,7 +30,7 @@
   "renamed": "Канал переименован",
   "addNamePlaceholder": "Имя канала",
   "channelAddedToast": "Канал создан",
-  "yupMinChannelName": "От 3 до 20 символов",
+  "yupMinChannelName": "Не менее 6 символов",
   "yupMaxChannelName": "От 3 до 20 символов",
   "channelControl":"Управление каналом"
 }
