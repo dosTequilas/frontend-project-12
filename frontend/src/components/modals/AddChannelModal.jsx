@@ -8,7 +8,7 @@ const channelSchema = yup.object().shape({
   name: yup
     .string()
     .min(3, "Channel must be at least 3 characters")
-    .max(20, "Channel name be no more than 20 characters")
+    .max(20, "От 3 до 20 символов")
     .required("Channel name is required"),
 });
 
@@ -54,9 +54,11 @@ const AddChannelModal = ({ show, onHide, onAdd, channels }) => {
                   onBlur={handleBlur}
                   value={values.name}
                   isInvalid={touched.name && !!errors.name}
-                  placeholder={t("addNamePlaceholder")}
                   autoFocus
                 />
+                <label htmlFor="channelName" className="visually-hidden">
+                  {t("addNamePlaceholder")}
+                </label>
                 <Form.Control.Feedback type="invalid">
                   {errors.name}
                 </Form.Control.Feedback>

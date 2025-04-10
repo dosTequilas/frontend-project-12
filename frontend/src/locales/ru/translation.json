@@ -26,7 +26,11 @@
   "deleteChannel": "Удалить канал",
   "sure": "Уверены?",
   "deleted": "Канал удален",
-  "added": "Канал добавлен",
+  "added": "Канал создан",
   "renamed": "Канал переименован",
-  "addNamePlaceholder": "Имя канала"
+  "addNamePlaceholder": "Имя канала",
+  "channelAddedToast": "Канал создан",
+  "yupMinChannelName": "От 3 до 20 символов",
+  "yupMaxChannelName": "От 3 до 20 символов",
+  "channelControl":"Управление каналом"
 }

@@ -58,6 +58,12 @@ export const ChannelsList = ({
                   className="ml-2"
                   onClick={() => setCurrentChannel(channel)}
                 >
+                  <label
+                    htmlFor={`dropdown-${channel.id}`}
+                    classname="visually-hidden"
+                  >
+                    {t("channelControl")}
+                  </label>
                   <Dropdown.Item
                     //использование setShow
                     onClick={() => setShowRemoveChannelModal(channel)}

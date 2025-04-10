@@ -12,6 +12,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import Filter from "leo-profanity";
+import leoProfanity from "leo-profanity";
 
 import {
   useGetChannelsQuery,
@@ -28,6 +29,7 @@ import {
 
 //добавляем русский словарь
 Filter.loadDictionary("ru");
+Filter.loadDictionary("en");
 
 const socket = io("http://localhost:3000");
 
@@ -80,10 +82,15 @@ const ChatPage = () => {
   };
 
   const handleChannelAdd = async (channelName) => {
-    setCurrentChannel(channelName);
+    const cleanedName = leoProfanity.clean(channelName);
+    setCurrentChannel(cleanedName);
     try {
-      await addChannel({ name: channelName }).unwrap();
-      toast.success(t("added"));
+      await addChannel({ name: cleanedName }).unwrap();
+      toast.success(t("added"), {
+        toastId: "channelAddedToast", // метод с html for не срабтал - все равно не видит
+        id: "channelAddedToast",
+      });
+      <label htmlFor="channelAddedToast">{t("channelAddedToast")}</label>;
       setShowAddChannelModal(false);
     } catch (error) {
       console.error("Failed to add channel:", error);
@@ -191,7 +198,3 @@ const ChatPage = () => {
 };
 
 export default ChatPage;
-
-// поправить отступ сверху - готово (className my-4)
-// обрезать длинные названия css
-// ui state меняется после запроса - redux
