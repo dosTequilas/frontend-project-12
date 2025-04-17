@@ -50,6 +50,7 @@ const AddChannelModal = ({ show, onHide, onAdd, channels }) => {
                 <Form.Control
                   type="text"
                   name="name"
+                  id="channelName"
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.name}

@@ -69,7 +69,7 @@ const Login = () => {
                 setSubmitting(false);
                 navigate("/Chat"); // Перенаправление на страницу чата
               } catch (error) {
-                toast.error("Invalid credentials", {
+                toast.error(t("invalidCredentials"), {
                   position: "bottom-right",
                   autoClose: 5000,
                   hideProgressBar: false,

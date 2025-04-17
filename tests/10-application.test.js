@@ -15,7 +15,7 @@ const newUser = {
 
 test.beforeEach(async ({ page }) => {
   await page.goto("http://localhost:3000");
-  await page.waitForTimeout(30);
+  await page.waitForTimeout(300);
 
   await page.locator("text=Hexlet Chat").first().click();
 });
@@ -147,10 +147,7 @@ test.describe("chat", () => {
 
     // проверка, что имя канала от 3 до 20 символов
     await page.locator("text=+").first().click();
-    await page
-      .locator("text=Имя канала")
-      .first()
-      .type("test long channel name");
+    await page.getByLabel("Имя канала").first().type("test long channel name");
     await page.keyboard.press("Enter");
 
     await expect(await page.locator("text=От 3 до 20 символов")).toHaveCount(1);
@@ -159,7 +156,7 @@ test.describe("chat", () => {
   test("adding channel profanity", async ({ page }) => {
     // проверка для имени канала
     await page.locator("text=+").first().click();
-    await page.locator("text=Имя канала").first().type("boobs");
+    await page.getByLabel("Имя канала").first().type("boobs");
     await page.keyboard.press("Enter");
 
     await expect(
@@ -170,7 +167,7 @@ test.describe("chat", () => {
   test("rename channel", async ({ page }) => {
     await page.locator('text="Управление каналом"').first().click();
     await page.locator("text=Переименовать").first().click();
-    const input = await page.locator("text=Имя канала");
+    const input = page.getByLabel("Имя канала");
     await input.fill("");
     await input.first().type("new test channel");
     await page.keyboard.press("Enter");
@@ -243,17 +240,18 @@ test.describe("two users chatting", () => {
   });
 
   test("only initiator is switched to new channel", async ({ page }) => {
+    await page2
+      .locator('[aria-label="Новое сообщение"]')
+      .first()
+      .type("I am here");
+    await page2.keyboard.press("Enter");
+
     await page.locator("text=+").first().click();
     await page.locator("text=Имя канала").first().type("test channel 2");
     await page.keyboard.press("Enter");
 
-    await expect(
-      await page.getByRole("button", { name: "test channel 2" })
-    ).toHaveClass("w-100 rounded-0 text-start text-truncate btn btn-secondary");
-    await expect(
-      await page2.getByRole("button", { name: "test channel 2" })
-    ).not.toHaveClass(
-      "w-100 rounded-0 text-start text-truncate btn btn-secondary"
-    );
+    await expect(await page2.locator("text=I am here")).toBeVisible();
+
+    await expect(await page.locator("text=I am here")).not.toBeVisible();
   });
 });

@@ -1,14 +1,7 @@
 import React from "react";
 import { PlusSquare } from "react-bootstrap-icons";
-import {
-  ListGroup,
-  Button,
-  ButtonGroup,
-  Dropdown,
-  DropdownButton,
-} from "react-bootstrap";
+import { ListGroup, Button, Dropdown } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
-import SplitButton from "react-bootstrap/SplitButton";
 
 export const ChannelsList = ({
   channels,
@@ -39,18 +32,18 @@ export const ChannelsList = ({
         {channels && channels.length > 0 ? (
           channels.map((channel) => (
             <div
+              onClick={() => setCurrentChannel(channel)}
               key={channel.id}
               className="d-flex justify-content-between align-items-center channel-name"
             >
               <ListGroup.Item
                 action
                 active={currentChannel?.id === channel.id}
-                onClick={() => setCurrentChannel(channel)}
                 className="w-100"
               >
                 # {channel.name}
               </ListGroup.Item>
-              {channel.name !== "general" && channel.name !== "random" && (
+              {channel.removable && (
                 <Dropdown>
                   <Dropdown.Toggle split className="flex-grow-0" variant="down">
                     <label className="visually-hidden">

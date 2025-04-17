@@ -56,7 +56,7 @@ const Signup = () => {
     } catch (error) {
       if (error.response) {
         if (error.response.status === 409) {
-          setErrors({ server: "Пользователь с таким именем уже существует" });
+          setErrors({ server: "Такой пользователь уже существует" });
         } else {
           setErrors({
             server: error.response.data.message || "Ошибка регистрации",
