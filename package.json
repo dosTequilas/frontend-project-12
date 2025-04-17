@@ -6,7 +6,8 @@
   "scripts": {
     "start": "npx start-server -s frontend/build",
     "build": "npm run build --prefix frontend",
-    "eject": "cd frontend && react-scripts eject"
+    "eject": "cd frontend && react-scripts eject",
+    "test:e2e": "npx playwright test --reporter=html --trace on"
   },
   "author": "",
   "license": "ISC",
@@ -23,8 +24,5 @@
   ],
   "devDependencies": {
     "@playwright/test": "^1.50.1"
-  },
-  "scripts": {
-  "test:e2e": "npx playwright test --reporter=html --trace on"
-}
+  }
 }
