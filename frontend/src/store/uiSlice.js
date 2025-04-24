@@ -1,9 +1,8 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { channelsApi } from "./channelSlice";
-import matchers from "@testing-library/jest-dom/matchers";
+import { createSlice } from '@reduxjs/toolkit';
+import { channelsApi } from './channelSlice';
 
 const uiSlice = createSlice({
-  name: "ui",
+  name: 'ui',
   initialState: {
     selectedChannelId: null,
   },
@@ -15,14 +14,14 @@ const uiSlice = createSlice({
   extraReducers: (builder) => {
     builder.addMatcher(
       channelsApi.endpoints.removeChannel.matchFulfilled,
-      (state, action) => {
-        state.selectedChannelId = "1";
+      (state) => {
+        state.selectedChannelId = '1';
       }
     );
     builder.addMatcher(
       channelsApi.endpoints.addChannel.matchFulfilled,
       (state, action) => {
-        console.log("action: ", action);
+        console.log('action: ', action);
         state.selectedChannelId = action.payload.id;
       }
     );

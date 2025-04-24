@@ -68,7 +68,7 @@ const Login = () => {
 
                 setSubmitting(false);
                 navigate('/Chat'); // Перенаправление на страницу чата
-              } catch (error) {
+              } catch () {
                 toast.error(t('invalidCredentials'), {
                   position: 'bottom-right',
                   autoClose: 5000,
