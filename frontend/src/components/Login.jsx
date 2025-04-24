@@ -1,6 +1,6 @@
 import React from 'react';
 import { Formik } from 'formik';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setAuthData } from '../store/authSlice';
