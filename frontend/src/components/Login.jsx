@@ -69,22 +69,13 @@ const Login = () => {
                 setSubmitting(false);
                 navigate('/Chat'); // Перенаправление на страницу чата
               } catch (error) {
-                if (error instanceof AxiosError) {
-                  if (error.status === 401) {
-                    setErrors({ submit: 'Invalid credentials' });
-                  } else {
-                    toast.error(t('NetworkError'), {
-                      position: 'bottom-right',
-                      autoClose: 5000,
-                      hideProgressBar: false,
-                      closeOnClick: true,
-                      pauseOnHover: true,
-                      draggable: true,
-                      progress: undefined,
-                    });
-                  }
-                } else {
-                  toast.error(t('UnidentifiedError'), {
+                console.log(error);
+                if (error.response.status === 401) {
+                  setErrors({ submit: t('invalidCredentials') });
+                  return;
+                }
+                if (error.response.status !== 401) {
+                  toast.error(t('NetworkError'), {
                     position: 'bottom-right',
                     autoClose: 5000,
                     hideProgressBar: false,
@@ -93,7 +84,18 @@ const Login = () => {
                     draggable: true,
                     progress: undefined,
                   });
+                  return;
                 }
+                toast.error(t('UnidentifiedError'), {
+                  position: 'bottom-right',
+                  autoClose: 5000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                });
+
                 setSubmitting(false);
               }
             }}
