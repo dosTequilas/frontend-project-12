@@ -1,6 +1,6 @@
 import React from 'react';
 import { Formik } from 'formik';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setAuthData } from '../store/authSlice';
@@ -68,17 +68,32 @@ const Login = () => {
 
                 setSubmitting(false);
                 navigate('/Chat'); // Перенаправление на страницу чата
-              } catch () {
-                toast.error(t('invalidCredentials'), {
-                  position: 'bottom-right',
-                  autoClose: 5000,
-                  hideProgressBar: false,
-                  closeOnClick: true,
-                  pauseOnHover: true,
-                  draggable: true,
-                  progress: undefined,
-                });
-                setErrors({ submit: 'Invalid credentials' });
+              } catch (error) {
+                if (error instanceof AxiosError) {
+                  if (error.status === 401) {
+                    setErrors({ submit: 'Invalid credentials' });
+                  } else {
+                    toast.error(t('NetworkError'), {
+                      position: 'bottom-right',
+                      autoClose: 5000,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+                      draggable: true,
+                      progress: undefined,
+                    });
+                  }
+                } else {
+                  toast.error(t('UnidentifiedError'), {
+                    position: 'bottom-right',
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                  });
+                }
                 setSubmitting(false);
               }
             }}

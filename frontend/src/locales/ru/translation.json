@@ -33,5 +33,7 @@
   "yupMinChannelName": "Не менее 6 символов",
   "yupMaxChannelName": "От 3 до 20 символов",
   "channelControl":"Управление каналом",
-  "invalidCredentials":"Неверные имя пользователя или пароль"
+  "invalidCredentials":"Неверные имя пользователя или пароль",
+  "NetworkError": "Ошибка сети",
+  "UnidentifiedError": "Неизвестная ошибка"
 }
