@@ -1,15 +1,15 @@
-import React from "react";
-import { Modal, Button, Form } from "react-bootstrap";
-import { Formik } from "formik";
-import * as yup from "yup";
-import { useTranslation } from "react-i18next";
+import React from 'react';
+import { Modal, Button, Form } from 'react-bootstrap';
+import { Formik } from 'formik';
+import * as yup from 'yup';
+import { useTranslation } from 'react-i18next';
 
 const channelSchema = yup.object().shape({
   name: yup
     .string()
-    .min(3, "Channel must be at least 3 characters")
-    .max(20, "От 3 до 20 символов")
-    .required("Channel name is required"),
+    .min(3, 'Channel must be at least 3 characters')
+    .max(20, 'От 3 до 20 символов')
+    .required('Channel name is required'),
 });
 
 const AddChannelModal = ({ show, onHide, onAdd, channels }) => {
@@ -20,15 +20,15 @@ const AddChannelModal = ({ show, onHide, onAdd, channels }) => {
   return (
     <Modal show={show} onHide={onHide}>
       <Modal.Header closeButton>
-        <Modal.Title>{t("addChannel")}</Modal.Title>
+        <Modal.Title>{t('addChannel')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Formik
-          initialValues={{ name: "" }}
+          initialValues={{ name: '' }}
           validationSchema={channelSchema}
           onSubmit={(values, { setSubmitting }) => {
             if (channelNames.includes(values.name)) {
-              alert("Channel name already exists");
+              alert('Channel name already exists');
               setSubmitting(false);
               return;
             }
@@ -58,7 +58,7 @@ const AddChannelModal = ({ show, onHide, onAdd, channels }) => {
                   autoFocus
                 />
                 <label htmlFor="channelName" className="visually-hidden">
-                  {t("addNamePlaceholder")}
+                  {t('addNamePlaceholder')}
                 </label>
                 <Form.Control.Feedback type="invalid">
                   {errors.name}
@@ -66,10 +66,10 @@ const AddChannelModal = ({ show, onHide, onAdd, channels }) => {
               </Form.Group>
               <div className="d-flex justify-content-end mt-3">
                 <Button variant="secondary" onClick={onHide} className="me-2">
-                  {t("cancel")}
+                  {t('cancel')}
                 </Button>
                 <Button variant="primary" type="submit" disabled={isSubmitting}>
-                  {t("send")}
+                  {t('send')}
                 </Button>
               </div>
             </Form>

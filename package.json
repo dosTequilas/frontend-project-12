@@ -23,6 +23,7 @@
     "frontend"
   ],
   "devDependencies": {
-    "@playwright/test": "^1.50.1"
+    "@playwright/test": "^1.50.1",
+    "prettier": "^3.5.3"
   }
 }

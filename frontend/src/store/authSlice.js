@@ -1,7 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const authSlice = createSlice({
-  name: "auth",
+  name: 'auth',
   initialState: {
     token: null,
     username: null,
@@ -14,8 +14,8 @@ const authSlice = createSlice({
       state.username = username;
 
       // Сохраняем данные в state
-      localStorage.setItem("token", token);
-      localStorage.setItem("username", username);
+      localStorage.setItem('token', token);
+      localStorage.setItem('username', username);
     },
     clearAuthData: (state) => {
       // Удаляем данные из state
@@ -23,8 +23,8 @@ const authSlice = createSlice({
       state.username = null;
 
       // Очищаем localStorage
-      localStorage.removeItem("token");
-      localStorage.removeItem("username");
+      localStorage.removeItem('token');
+      localStorage.removeItem('username');
     },
   },
 });

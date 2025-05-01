@@ -1,7 +1,7 @@
-import React from "react";
-import { PlusSquare } from "react-bootstrap-icons";
-import { ListGroup, Button, Dropdown } from "react-bootstrap";
-import { useTranslation } from "react-i18next";
+import React from 'react';
+import { PlusSquare } from 'react-bootstrap-icons';
+import { ListGroup, Button, Dropdown } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 
 export const ChannelsList = ({
   channels,
@@ -17,7 +17,7 @@ export const ChannelsList = ({
   return (
     <div>
       <div className="d-flex mt-1 justify-content-between mb-2 p-4">
-        <b>{t("channels")}</b>
+        <b>{t('channels')}</b>
         <Button
           type="button"
           variant="group-vertical"
@@ -47,7 +47,7 @@ export const ChannelsList = ({
                 <Dropdown>
                   <Dropdown.Toggle split className="flex-grow-0" variant="down">
                     <label className="visually-hidden">
-                      {t("channelControl")}
+                      {t('channelControl')}
                     </label>
                   </Dropdown.Toggle>
 
@@ -55,14 +55,14 @@ export const ChannelsList = ({
                     <Dropdown.Item
                       onClick={() => setShowRemoveChannelModal(channel)}
                     >
-                      {t("remove")}
+                      {t('remove')}
                     </Dropdown.Item>
                     <Dropdown.Item
                       onClick={() => {
                         setShowRenameChannelModal(channel);
                       }}
                     >
-                      {t("rename")}
+                      {t('rename')}
                     </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
@@ -70,7 +70,7 @@ export const ChannelsList = ({
             </div>
           ))
         ) : (
-          <ListGroup.Item>{t("noChannelsAvailable")}</ListGroup.Item>
+          <ListGroup.Item>{t('noChannelsAvailable')}</ListGroup.Item>
         )}
       </ListGroup>
     </div>

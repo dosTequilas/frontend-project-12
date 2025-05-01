@@ -11,7 +11,7 @@ export const initializeApp = () => {
     store.dispatch(
       messagesApi.util.updateQueryData('getMessages', undefined, (draft) => {
         draft.push(message);
-      })
+      }),
     );
   });
 

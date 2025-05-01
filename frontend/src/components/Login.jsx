@@ -63,7 +63,7 @@ const Login = () => {
                   setAuthData({
                     token: response.data.token,
                     username: values.username,
-                  })
+                  }),
                 );
 
                 setSubmitting(false);

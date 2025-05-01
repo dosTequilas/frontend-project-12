@@ -16,14 +16,14 @@ const uiSlice = createSlice({
       channelsApi.endpoints.removeChannel.matchFulfilled,
       (state) => {
         state.selectedChannelId = '1';
-      }
+      },
     );
     builder.addMatcher(
       channelsApi.endpoints.addChannel.matchFulfilled,
       (state, action) => {
         console.log('action: ', action);
         state.selectedChannelId = action.payload.id;
-      }
+      },
     );
   },
 });

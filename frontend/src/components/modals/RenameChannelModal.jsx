@@ -1,7 +1,7 @@
-import React, { useEffect, useRef } from "react";
-import { Modal, Button, Form } from "react-bootstrap";
-import { Formik } from "formik";
-import { useTranslation } from "react-i18next";
+import React, { useEffect, useRef } from 'react';
+import { Modal, Button, Form } from 'react-bootstrap';
+import { Formik } from 'formik';
+import { useTranslation } from 'react-i18next';
 
 const RenameChannelModal = ({ show, onHide, onRename, currentChannel }) => {
   const inputRef = useRef(null);
@@ -41,15 +41,15 @@ const RenameChannelModal = ({ show, onHide, onRename, currentChannel }) => {
                   autoFocus
                 />
                 <label htmlFor="channelName" className="visually-hidden">
-                  {t("addNamePlaceholder")}
+                  {t('addNamePlaceholder')}
                 </label>
               </Form.Group>
               <div className="d-flex justify-content-end mt-3">
                 <Button variant="secondary" onClick={onHide} className="me-2">
-                  {t("cancel")}
+                  {t('cancel')}
                 </Button>
                 <Button variant="primary" type="submit">
-                  {t("send")}
+                  {t('send')}
                 </Button>
               </div>
             </Form>
