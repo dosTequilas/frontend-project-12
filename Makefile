@@ -1,5 +1,4 @@
 build:
-	npm ci
 	npm run build
 
 start-backend:
