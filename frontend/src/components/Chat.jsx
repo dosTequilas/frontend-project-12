@@ -83,7 +83,7 @@ const ChatPage = () => {
     try {
       await addChannel({ name: cleanedName }).unwrap();
       toast.success(t('added'), {
-        toastId: 'channelAddedToast', // метод с html for не срабтал - все равно не видит
+        toastId: 'channelAddedToast', // метод с html for не
         id: 'channelAddedToast',
       });
       <label htmlFor="channelAddedToast">{t('channelAddedToast')}</label>;
