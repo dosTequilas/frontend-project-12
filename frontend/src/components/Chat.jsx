@@ -23,8 +23,6 @@ import {
   useSendMessageMutation,
 } from '../store/messagesSlice'; // хуки RTK query
 
-// const Filter = require("leo-profanity");
-
 //добавляем русский словарь
 Filter.loadDictionary('ru');
 Filter.loadDictionary('en');

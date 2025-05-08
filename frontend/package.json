@@ -11,8 +11,10 @@
     "axios": "^1.7.2",
     "bootstrap": "^5.3.3",
     "formik": "^2.4.6",
+    "functional": "^1.0.0",
     "i18next": "^23.16.5",
     "leo-profanity": "^1.7.0",
+    "plugin": "^0.3.3",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.4",
     "react-dom": "^18.3.1",
@@ -52,6 +54,6 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "eslint": "^9.25.1"
+    "eslint": "^9.26.0"
   }
 }
