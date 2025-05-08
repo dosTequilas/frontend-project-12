@@ -16,7 +16,7 @@ const PrivateRoute = ({ element: Element }) => {
 };
 
 const rollbarConfig = {
-  accessToken: 'fd62798c6e0a4b73aa87e9fe69dd5ecb', //токены в env файл и тут доставать
+  accessToken: process.env.REACT_APP_ROLLBAR_ACCESS_TOKEN,
   environment: 'testenv',
 };
 
