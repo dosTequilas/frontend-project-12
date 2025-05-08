@@ -1,7 +1,6 @@
-import React from 'react';
-import { PlusSquare } from 'react-bootstrap-icons';
-import { ListGroup, Button, Dropdown } from 'react-bootstrap';
-import { useTranslation } from 'react-i18next';
+import { PlusSquare } from 'react-bootstrap-icons'
+import { ListGroup, Button, Dropdown } from 'react-bootstrap'
+import { useTranslation } from 'react-i18next'
 
 export const ChannelsList = ({
   channels,
@@ -11,8 +10,8 @@ export const ChannelsList = ({
   setShowRemoveChannelModal,
   setShowRenameChannelModal,
 }) => {
-  //i18n
-  const { t } = useTranslation();
+  // i18n
+  const { t } = useTranslation()
 
   return (
     <div>
@@ -29,50 +28,54 @@ export const ChannelsList = ({
         </Button>
       </div>
       <ListGroup variant="flush" className="overflow-auto flex-grow-1">
-        {channels && channels.length > 0 ? (
-          channels.map((channel) => (
-            <div
-              onClick={() => setCurrentChannel(channel)}
-              key={channel.id}
-              className="d-flex justify-content-between align-items-center channel-name"
-            >
-              <ListGroup.Item
-                action
-                active={currentChannel?.id === channel.id}
-                className="w-100"
-              >
-                # {channel.name}
-              </ListGroup.Item>
-              {channel.removable && (
-                <Dropdown>
-                  <Dropdown.Toggle split className="flex-grow-0" variant="down">
-                    <label className="visually-hidden">
-                      {t('channelControl')}
-                    </label>
-                  </Dropdown.Toggle>
+        {channels && channels.length > 0
+          ? (
+              channels.map(channel => (
+                <div
+                  onClick={() => setCurrentChannel(channel)}
+                  key={channel.id}
+                  className="d-flex justify-content-between align-items-center channel-name"
+                >
+                  <ListGroup.Item
+                    action
+                    active={currentChannel?.id === channel.id}
+                    className="w-100"
+                  >
+                    #
+                    {' '}
+                    {channel.name}
+                  </ListGroup.Item>
+                  {channel.removable && (
+                    <Dropdown>
+                      <Dropdown.Toggle split className="flex-grow-0" variant="down">
+                        <label className="visually-hidden">
+                          {t('channelControl')}
+                        </label>
+                      </Dropdown.Toggle>
 
-                  <Dropdown.Menu>
-                    <Dropdown.Item
-                      onClick={() => setShowRemoveChannelModal(channel)}
-                    >
-                      {t('remove')}
-                    </Dropdown.Item>
-                    <Dropdown.Item
-                      onClick={() => {
-                        setShowRenameChannelModal(channel);
-                      }}
-                    >
-                      {t('rename')}
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-              )}
-            </div>
-          ))
-        ) : (
-          <ListGroup.Item>{t('noChannelsAvailable')}</ListGroup.Item>
-        )}
+                      <Dropdown.Menu>
+                        <Dropdown.Item
+                          onClick={() => setShowRemoveChannelModal(channel)}
+                        >
+                          {t('remove')}
+                        </Dropdown.Item>
+                        <Dropdown.Item
+                          onClick={() => {
+                            setShowRenameChannelModal(channel)
+                          }}
+                        >
+                          {t('rename')}
+                        </Dropdown.Item>
+                      </Dropdown.Menu>
+                    </Dropdown>
+                  )}
+                </div>
+              ))
+            )
+          : (
+              <ListGroup.Item>{t('noChannelsAvailable')}</ListGroup.Item>
+            )}
       </ListGroup>
     </div>
-  );
-};
+  )
+}

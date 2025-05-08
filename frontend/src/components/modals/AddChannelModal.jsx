@@ -1,8 +1,7 @@
-import React from 'react';
-import { Modal, Button, Form } from 'react-bootstrap';
-import { Formik } from 'formik';
-import * as yup from 'yup';
-import { useTranslation } from 'react-i18next';
+import { Modal, Button, Form } from 'react-bootstrap'
+import { Formik } from 'formik'
+import * as yup from 'yup'
+import { useTranslation } from 'react-i18next'
 
 const channelSchema = yup.object().shape({
   name: yup
@@ -10,12 +9,12 @@ const channelSchema = yup.object().shape({
     .min(3, 'Channel must be at least 3 characters')
     .max(20, 'От 3 до 20 символов')
     .required('Channel name is required'),
-});
+})
 
 const AddChannelModal = ({ show, onHide, onAdd, channels }) => {
-  const channelNames = channels.map((channel) => channel.name);
+  const channelNames = channels.map(channel => channel.name)
 
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
   return (
     <Modal show={show} onHide={onHide}>
@@ -28,12 +27,12 @@ const AddChannelModal = ({ show, onHide, onAdd, channels }) => {
           validationSchema={channelSchema}
           onSubmit={(values, { setSubmitting }) => {
             if (channelNames.includes(values.name)) {
-              alert('Channel name already exists');
-              setSubmitting(false);
-              return;
+              alert('Channel name already exists')
+              setSubmitting(false)
+              return
             }
-            onAdd(values.name);
-            setSubmitting(false);
+            onAdd(values.name)
+            setSubmitting(false)
           }}
         >
           {({
@@ -77,7 +76,7 @@ const AddChannelModal = ({ show, onHide, onAdd, channels }) => {
         </Formik>
       </Modal.Body>
     </Modal>
-  );
-};
+  )
+}
 
-export default AddChannelModal;
+export default AddChannelModal

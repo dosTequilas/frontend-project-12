@@ -1,141 +1,144 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import AddChannelModal from './modals/AddChannelModal';
-import RenameChannelModal from './modals/RenameChannelModal';
-import RemoveChannelModal from './modals/RemoveChannelsModal';
-import { messagesApi } from '../store/messagesSlice';
-import Messages from './Messages';
-import { ChannelsList } from './ChannelsList';
-import { Container, Row, Col } from 'react-bootstrap';
-import { useTranslation } from 'react-i18next';
-import { toast } from 'react-toastify';
-import Filter from 'leo-profanity';
-import leoProfanity from 'leo-profanity';
+import { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import AddChannelModal from './modals/AddChannelModal'
+import RenameChannelModal from './modals/RenameChannelModal'
+import RemoveChannelModal from './modals/RemoveChannelsModal'
+import { messagesApi } from '../store/messagesSlice'
+import Messages from './Messages'
+import { ChannelsList } from './ChannelsList'
+import { Container, Row, Col } from 'react-bootstrap'
+import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
+import Filter from 'leo-profanity'
+import leoProfanity from 'leo-profanity'
 
 import {
   useGetChannelsQuery,
   useAddChannelMutation,
   useRemoveChannelMutation,
   useRenameChannelMutation,
-} from '../store/channelSlice';
+} from '../store/channelSlice'
 import {
   useGetMessagesQuery,
   useSendMessageMutation,
-} from '../store/messagesSlice'; // хуки RTK query
+} from '../store/messagesSlice' // хуки RTK query
 
-//добавляем русский словарь
-Filter.loadDictionary('ru');
-Filter.loadDictionary('en');
+// добавляем русский словарь
+Filter.loadDictionary('ru')
+Filter.loadDictionary('en')
 
 const ChatPage = () => {
-  //получаем данные от сервера через хуки RTK Query
-  const { data: channels = [], isLoading: channelsLoading } =
-    useGetChannelsQuery();
-  const { data: messages = [], isLoading: messagesLoading } =
-    useGetMessagesQuery();
+  // получаем данные от сервера через хуки RTK Query
+  const { data: channels = [], isLoading: channelsLoading }
+    = useGetChannelsQuery()
+  const { data: messages = [], isLoading: messagesLoading }
+    = useGetMessagesQuery()
 
   // создаем состояние в компоненте, null потому что канал не выбран
-  const [currentChannel, setCurrentChannel] = useState(null);
-  const [newMessage, setNewMessage] = useState('');
+  const [currentChannel, setCurrentChannel] = useState(null)
+  const [newMessage, setNewMessage] = useState('')
 
   // создаем модальные окна с помощью хука useState.
   // show... - это состояние, setShow - это функция для управления состоянием
-  const [showAddChannelModal, setShowAddChannelModal] = useState(false);
-  const [showRenameChannelModal, setShowRenameChannelModal] = useState(false);
-  const [showRemoveChannelModal, setShowRemoveChannelModal] = useState(false);
+  const [showAddChannelModal, setShowAddChannelModal] = useState(false)
+  const [showRenameChannelModal, setShowRenameChannelModal] = useState(false)
+  const [showRemoveChannelModal, setShowRemoveChannelModal] = useState(false)
 
-  const dispatch = useDispatch();
-  const [sendMessage] = useSendMessageMutation();
-  const [addChannel] = useAddChannelMutation();
-  const [removeChannel] = useRemoveChannelMutation();
-  const [renameChannel] = useRenameChannelMutation();
+  const dispatch = useDispatch()
+  const [sendMessage] = useSendMessageMutation()
+  const [addChannel] = useAddChannelMutation()
+  const [removeChannel] = useRemoveChannelMutation()
+  const [renameChannel] = useRenameChannelMutation()
 
   // useEffect с пустым массивом = component did mount. - еще до смены каналов будет выбранный канал.
   // По умолчанию выбираем первый канал при изменении каналов.
   useEffect(() => {
     if (channels.length > 0 && !currentChannel) {
-      setCurrentChannel(channels[0]);
+      setCurrentChannel(channels[0])
     }
-  }, [channels, currentChannel]);
+  }, [channels, currentChannel])
 
   const handleChannelChange = (channel) => {
-    setCurrentChannel(channel); // Устанавливаем новый текущий канал
-  };
-  const { t } = useTranslation();
+    setCurrentChannel(channel) // Устанавливаем новый текущий канал
+  }
+  const { t } = useTranslation()
   const handleChannelRemove = async (channel) => {
     if (currentChannel?.id === channel.id) {
-      setCurrentChannel(channels.find((c) => c.name === 'General'));
+      setCurrentChannel(channels.find(c => c.name === 'General'))
     }
-    setShowRemoveChannelModal(true);
+    setShowRemoveChannelModal(true)
     try {
-      await removeChannel(channel.id).unwrap();
-      toast.success(t('deleted'));
-    } catch (err) {
-      console.error('Failed to remove channel: ', err);
+      await removeChannel(channel.id).unwrap()
+      toast.success(t('deleted'))
     }
-  };
+    catch (err) {
+      console.error('Failed to remove channel: ', err)
+    }
+  }
 
   const handleChannelAdd = async (channelName) => {
-    const cleanedName = leoProfanity.clean(channelName);
-    setCurrentChannel(cleanedName);
+    const cleanedName = leoProfanity.clean(channelName)
+    setCurrentChannel(cleanedName)
     try {
-      await addChannel({ name: cleanedName }).unwrap();
+      await addChannel({ name: cleanedName }).unwrap()
       toast.success(t('added'), {
-        toastId: 'channelAddedToast', // метод с html for не
+        toastId: 'channelAddedToast', // метод с html for не срабтал - все равно не видит
         id: 'channelAddedToast',
-      });
-      <label htmlFor="channelAddedToast">{t('channelAddedToast')}</label>;
-      setShowAddChannelModal(false);
-    } catch (error) {
-      console.error('Failed to add channel:', error);
+      })
+      setShowAddChannelModal(false)
     }
-  };
+    catch (error) {
+      console.error('Failed to add channel:', error)
+    }
+  }
 
   const handleChannelRename = async (channelId, newName) => {
     try {
       if (!channelId) {
-        console.error('Channel ID is undefined');
-        return;
+        console.error('Channel ID is undefined')
+        return
       }
-      console.log('Renaming channel with ID:', channelId); // Логирование
-      const result = await renameChannel({ channelId, newName }).unwrap();
-      console.log('Rename successful:', result);
-      toast.success(t('renamed'));
-      setShowRenameChannelModal(false);
-    } catch (err) {
-      console.error('Failed to rename channel:', err);
+      console.log('Renaming channel with ID:', channelId) // Логирование
+      const result = await renameChannel({ channelId, newName }).unwrap()
+      console.log('Rename successful:', result)
+      toast.success(t('renamed'))
+      setShowRenameChannelModal(false)
     }
-  };
+    catch (err) {
+      console.error('Failed to rename channel:', err)
+    }
+  }
 
   const handleSendMessage = async (e) => {
-    e.preventDefault();
-    if (!newMessage.trim()) return;
+    e.preventDefault()
+    if (!newMessage.trim()) return
 
     // Проверка на наличие выбранного канала
     if (!currentChannel) {
-      console.error('No channel selected');
-      return;
+      console.error('No channel selected')
+      return
     }
 
     // Фильтрация сообщения
-    const cleanMessage = Filter.clean(newMessage);
+    const cleanMessage = Filter.clean(newMessage)
 
     try {
       await sendMessage({
         body: cleanMessage,
         channelId: currentChannel.id,
         username: localStorage.getItem('username'),
-      }).unwrap();
-      setNewMessage('');
-      dispatch(messagesApi.util.invalidateTags(['Messages']));
+      }).unwrap()
+      setNewMessage('')
+      dispatch(messagesApi.util.invalidateTags(['Messages']))
       // refetch();
-    } catch (err) {
-      console.error('Failed to send message:', err);
     }
-  };
+    catch (err) {
+      console.error('Failed to send message:', err)
+    }
+  }
 
   if (channelsLoading || messagesLoading) {
-    return <div>Loading...</div>;
+    return <div>Loading...</div>
   }
 
   return (
@@ -175,9 +178,8 @@ const ChatPage = () => {
       <RenameChannelModal
         show={showRenameChannelModal !== false}
         onHide={() => setShowRenameChannelModal(false)}
-        onRename={(newName) =>
-          handleChannelRename(showRenameChannelModal?.id, newName)
-        }
+        onRename={newName =>
+          handleChannelRename(showRenameChannelModal?.id, newName)}
         currentChannel={showRenameChannelModal}
       />
 
@@ -188,7 +190,7 @@ const ChatPage = () => {
         currentChannel={currentChannel}
       />
     </div>
-  );
-};
+  )
+}
 
-export default ChatPage;
+export default ChatPage

@@ -1,19 +1,18 @@
-import React from 'react';
-import { Formik } from 'formik';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { setAuthData } from '../store/authSlice';
-import { Container, Row, Col, Form, Button } from 'react-bootstrap';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import { Formik } from 'formik'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { setAuthData } from '../store/authSlice'
+import { Container, Row, Col, Form, Button } from 'react-bootstrap'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 const Login = () => {
-  const { t } = useTranslation();
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const { t } = useTranslation()
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   return (
     <Container className="my-4">
@@ -28,14 +27,14 @@ const Login = () => {
           <Formik
             initialValues={{ username: '', password: '' }}
             validate={(values) => {
-              const errors = {};
+              const errors = {}
               if (!values.username) {
-                errors.username = 'Required';
+                errors.username = 'Required'
               }
               if (!values.password) {
-                errors.password = 'Required';
+                errors.password = 'Required'
               }
-              return errors;
+              return errors
             }}
             onSubmit={async (values, { setSubmitting, setErrors }) => {
               // Проверка на наличие интернет-соединения
@@ -48,31 +47,32 @@ const Login = () => {
                   pauseOnHover: true,
                   draggable: true,
                   progress: undefined,
-                });
-                setSubmitting(false);
-                return; // Останавливаем выполнение запроса, если нет соединения
+                })
+                setSubmitting(false)
+                return // Останавливаем выполнение запроса, если нет соединения
               }
 
               try {
                 const response = await axios.post('/api/v1/login', {
                   username: values.username,
                   password: values.password,
-                });
+                })
 
                 dispatch(
                   setAuthData({
                     token: response.data.token,
                     username: values.username,
                   }),
-                );
+                )
 
-                setSubmitting(false);
-                navigate('/Chat'); // Перенаправление на страницу чата
-              } catch (error) {
-                console.log(error);
+                setSubmitting(false)
+                navigate('/Chat') // Перенаправление на страницу чата
+              }
+              catch (error) {
+                console.log(error)
                 if (error.response.status === 401) {
-                  setErrors({ submit: t('invalidCredentials') });
-                  return;
+                  setErrors({ submit: t('invalidCredentials') })
+                  return
                 }
                 if (error.response.status !== 401) {
                   toast.error(t('NetworkError'), {
@@ -83,8 +83,8 @@ const Login = () => {
                     pauseOnHover: true,
                     draggable: true,
                     progress: undefined,
-                  });
-                  return;
+                  })
+                  return
                 }
                 toast.error(t('UnidentifiedError'), {
                   position: 'bottom-right',
@@ -94,9 +94,9 @@ const Login = () => {
                   pauseOnHover: true,
                   draggable: true,
                   progress: undefined,
-                });
+                })
 
-                setSubmitting(false);
+                setSubmitting(false)
               }
             }}
           >
@@ -166,7 +166,7 @@ const Login = () => {
         </Col>
       </Row>
     </Container>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

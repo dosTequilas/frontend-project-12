@@ -1,18 +1,18 @@
-import React, { useEffect, useRef } from 'react';
-import { Modal, Button, Form } from 'react-bootstrap';
-import { Formik } from 'formik';
-import { useTranslation } from 'react-i18next';
+import { useEffect, useRef } from 'react'
+import { Modal, Button, Form } from 'react-bootstrap'
+import { Formik } from 'formik'
+import { useTranslation } from 'react-i18next'
 
 const RenameChannelModal = ({ show, onHide, onRename, currentChannel }) => {
-  const inputRef = useRef(null);
+  const inputRef = useRef(null)
 
   useEffect(() => {
     if (show && inputRef.current) {
-      inputRef.current.focus();
+      inputRef.current.focus()
     }
-  }, [show]);
-  //i18n
-  const { t } = useTranslation();
+  }, [show])
+  // i18n
+  const { t } = useTranslation()
 
   return (
     <Modal show={show} onHide={onHide} centered>
@@ -23,8 +23,8 @@ const RenameChannelModal = ({ show, onHide, onRename, currentChannel }) => {
         <Formik
           initialValues={{ channelName: currentChannel.name }}
           onSubmit={(values) => {
-            onRename(values.channelName);
-            onHide();
+            onRename(values.channelName)
+            onHide()
           }}
         >
           {({ handleChange, handleBlur, handleSubmit, values }) => (
@@ -57,7 +57,7 @@ const RenameChannelModal = ({ show, onHide, onRename, currentChannel }) => {
         </Formik>
       </Modal.Body>
     </Modal>
-  );
-};
+  )
+}
 
-export default RenameChannelModal;
+export default RenameChannelModal

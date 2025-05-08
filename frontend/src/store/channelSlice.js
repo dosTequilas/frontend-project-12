@@ -1,4 +1,4 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const channelsApi = createApi({
   reducerPath: 'channelsApi',
@@ -6,20 +6,20 @@ export const channelsApi = createApi({
     baseUrl: '/api/v1',
     tagTypes: ['Channels'],
     prepareHeaders: (headers) => {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem('token')
       if (token) {
-        headers.set('Authorization', `Bearer ${token}`);
+        headers.set('Authorization', `Bearer ${token}`)
       }
-      return headers;
+      return headers
     },
   }),
-  endpoints: (builder) => ({
+  endpoints: builder => ({
     getChannels: builder.query({
       query: () => '/channels',
       providesTags: ['Channels'],
     }),
     addChannel: builder.mutation({
-      query: (channelName) => ({
+      query: channelName => ({
         url: '/channels',
         method: 'POST',
         body: channelName,
@@ -27,7 +27,7 @@ export const channelsApi = createApi({
       invalidatesTags: ['Channels'],
     }),
     removeChannel: builder.mutation({
-      query: (channelId) => ({
+      query: channelId => ({
         url: `/channels/${channelId}`,
         method: 'DELETE',
       }),
@@ -42,11 +42,11 @@ export const channelsApi = createApi({
       invalidatesTags: ['Channels'], // Обновляет кэш данных каналов
     }),
   }),
-});
+})
 
 export const {
   useGetChannelsQuery,
   useAddChannelMutation,
   useRemoveChannelMutation,
   useRenameChannelMutation,
-} = channelsApi;
+} = channelsApi

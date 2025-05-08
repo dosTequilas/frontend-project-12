@@ -1,5 +1,4 @@
-import React from 'react';
-import { Formik } from 'formik';
+import { Formik } from 'formik'
 
 const Basic = () => (
   <div>
@@ -7,21 +6,22 @@ const Basic = () => (
     <Formik
       initialValues={{ email: '', password: '' }}
       validate={(values) => {
-        const errors = {};
+        const errors = {}
         if (!values.email) {
-          errors.email = 'Required';
-        } else if (
+          errors.email = 'Required'
+        }
+        else if (
           !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
         ) {
-          errors.email = 'Invalid email address';
+          errors.email = 'Invalid email address'
         }
-        return errors;
+        return errors
       }}
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
-          alert(JSON.stringify(values, null, 2));
-          setSubmitting(false);
-        }, 400);
+          alert(JSON.stringify(values, null, 2))
+          setSubmitting(false)
+        }, 400)
       }}
     >
       {({
@@ -57,6 +57,6 @@ const Basic = () => (
       )}
     </Formik>
   </div>
-);
+)
 
-export default Basic;
+export default Basic

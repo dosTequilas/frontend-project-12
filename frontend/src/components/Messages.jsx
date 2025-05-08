@@ -1,6 +1,6 @@
-import React, { useEffect, useRef } from 'react';
-import { Form, InputGroup, Button } from 'react-bootstrap';
-import { useTranslation } from 'react-i18next';
+import { useEffect, useRef } from 'react'
+import { Form, InputGroup, Button } from 'react-bootstrap'
+import { useTranslation } from 'react-i18next'
 
 const Messages = ({
   messages,
@@ -9,31 +9,34 @@ const Messages = ({
   setNewMessage,
   handleSendMessage,
 }) => {
-  const messagesEndRef = useRef(null);
+  const messagesEndRef = useRef(null)
 
   useEffect(() => {
     if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' })
     }
-  }, [messages]);
+  }, [messages])
 
   // Отфильтровываем сообщения для текущего канала
   const filteredMessages = messages.filter((message) => {
-    const messageChannelId =
-      typeof message.channelId === 'object'
+    const messageChannelId
+      = typeof message.channelId === 'object'
         ? message.channelId.id
-        : message.channelId;
-    return messageChannelId === currentChannel?.id;
-  });
+        : message.channelId
+    return messageChannelId === currentChannel?.id
+  })
 
-  //i18n
-  const { t } = useTranslation();
+  // i18n
+  const { t } = useTranslation()
 
   return (
     <div className="d-flex flex-column h-100">
       <div className="bg-light mb-4 p-3 shadow-sm">
         <p className="m-0">
-          <b># {currentChannel ? currentChannel.name : 'No Channel'}</b>
+          <b>
+            #
+            {currentChannel ? currentChannel.name : 'No Channel'}
+          </b>
         </p>
         <span className="text-muted">
           {filteredMessages.length}
@@ -45,15 +48,22 @@ const Messages = ({
         className="chat-messages overflow-auto px-5 flex-grow-1"
         style={{ maxHeight: '70vh' }}
       >
-        {filteredMessages.length > 0 ? (
-          filteredMessages.map((message) => (
-            <div key={message.id} className="mb-2">
-              <strong>{message.username}:</strong> {message.body}
-            </div>
-          ))
-        ) : (
-          <div>{t('noMessages')}</div>
-        )}
+        {filteredMessages.length > 0
+          ? (
+              filteredMessages.map(message => (
+                <div key={message.id} className="mb-2">
+                  <strong>
+                    {message.username}
+                    :
+                  </strong>
+                  {' '}
+                  {message.body}
+                </div>
+              ))
+            )
+          : (
+              <div>{t('noMessages')}</div>
+            )}
         <div ref={messagesEndRef} />
       </div>
       <div className="mt-auto px-5 py-3">
@@ -65,7 +75,7 @@ const Messages = ({
               aria-label="Новое сообщение"
               placeholder="Введите сообщение..."
               value={newMessage}
-              onChange={(e) => setNewMessage(e.target.value)}
+              onChange={e => setNewMessage(e.target.value)}
               className="border"
             />
             <Button type="submit" variant="outline-secondary">
@@ -88,7 +98,7 @@ const Messages = ({
         </Form>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Messages;
+export default Messages

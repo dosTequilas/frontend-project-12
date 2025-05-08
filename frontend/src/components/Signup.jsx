@@ -1,28 +1,27 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
-import { setAuthData } from '../store/authSlice';
-import { Link, useNavigate } from 'react-router-dom';
-import * as Yup from 'yup';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import axios from 'axios';
+import { useDispatch } from 'react-redux'
+import { setAuthData } from '../store/authSlice'
+import { Link, useNavigate } from 'react-router-dom'
+import * as Yup from 'yup'
+import { Formik, Form, Field, ErrorMessage } from 'formik'
+import axios from 'axios'
 import {
   Form as BootstrapForm,
   Button,
   Container,
   Row,
   Col,
-} from 'react-bootstrap';
-import { useTranslation } from 'react-i18next';
+} from 'react-bootstrap'
+import { useTranslation } from 'react-i18next'
 
 const Signup = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const initialValues = {
     username: '',
     password: '',
     confirmPassword: '',
-  };
+  }
 
   const validationSchema = Yup.object({
     username: Yup.string()
@@ -35,14 +34,14 @@ const Signup = () => {
     confirmPassword: Yup.string()
       .oneOf([Yup.ref('password'), null], 'Пароли должны совпадать')
       .required('Обязательное поле'),
-  });
+  })
 
   const onSubmit = async (values, { setSubmitting, setErrors }) => {
     try {
       const response = await axios.post('/api/v1/signup', {
         username: values.username,
         password: values.password,
-      });
+      })
 
       // Диспатчим action для сохранения данных в Redux и localStorage
       dispatch(
@@ -50,27 +49,31 @@ const Signup = () => {
           token: response.data.token,
           username: values.username,
         }),
-      );
+      )
 
-      navigate('/chat');
-    } catch (error) {
+      navigate('/chat')
+    }
+    catch (error) {
       if (error.response) {
         if (error.response.status === 409) {
-          setErrors({ server: 'Такой пользователь уже существует' });
-        } else {
+          setErrors({ server: 'Такой пользователь уже существует' })
+        }
+        else {
           setErrors({
             server: error.response.data.message || 'Ошибка регистрации',
-          });
+          })
         }
-      } else {
-        setErrors({ server: 'Ошибка сети' });
       }
-    } finally {
-      setSubmitting(false);
+      else {
+        setErrors({ server: 'Ошибка сети' })
+      }
     }
-  };
+    finally {
+      setSubmitting(false)
+    }
+  }
 
-  const { t } = useTranslation();
+  const { t } = useTranslation()
   return (
     <Container className="signup-page my-4">
       <Row className="justify-content-center">
@@ -154,13 +157,15 @@ const Signup = () => {
 
           <div className="text-center mt-3">
             <p>
-              {t('alreadyHaveAnAccount')} <Link to="/login">{t('auth')}</Link>
+              {t('alreadyHaveAnAccount')}
+              {' '}
+              <Link to="/login">{t('auth')}</Link>
             </p>
           </div>
         </Col>
       </Row>
     </Container>
-  );
-};
+  )
+}
 
-export default Signup;
+export default Signup
