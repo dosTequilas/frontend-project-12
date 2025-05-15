@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { channelsApi } from './channelSlice'
+import { channelsApi } from './channelSlice.js'
 
 const uiSlice = createSlice({
   name: 'ui',
