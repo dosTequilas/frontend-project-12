@@ -11,9 +11,9 @@ export const store = configureStore({
     [channelsApi.reducerPath]: channelsApi.reducer,
   },
   middleware: (getDefaultMiddleware) => {
-    getDefaultMiddleware()
+    return getDefaultMiddleware()
       .concat(thunk)
       .concat(messagesApi.middleware)
       .concat(channelsApi.middleware)
   },
-})
+});
