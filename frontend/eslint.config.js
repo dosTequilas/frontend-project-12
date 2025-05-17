@@ -1,25 +1,15 @@
 import js from '@eslint/js'
 import globals from 'globals'
 import pluginReact from 'eslint-plugin-react'
-import { includeIgnoreFile } from '@eslint/compat'
 import stylistic from '@stylistic/eslint-plugin'
-import { fileURLToPath } from 'url'
-import { defineConfig, globalIgnores } from "eslint/config";
-
-
-const gitIgnorePath = fileURLToPath(new URL('.gitignore', import.meta.url))
-const eslintIgnorePath = fileURLToPath(
-  new URL('.eslintignore', import.meta.url),
-)
+import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
   globalIgnores([
-		"dist/*",
-		"build/*",
-		"node_modules/*",
-	]),
-  includeIgnoreFile(gitIgnorePath),
-  includeIgnoreFile(eslintIgnorePath),
+    'dist/*',
+    'build/*',
+    'node_modules/*',
+  ]),
   stylistic.configs.recommended,
   {
     files: ['**/*.{js,mjs,cjs,jsx}'],

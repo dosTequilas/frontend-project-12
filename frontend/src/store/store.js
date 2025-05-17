@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
-import authReducer from './authSlice'
+import authReducer from './authSlice.js'
 import { channelsApi } from './channelSlice.js'
 import { messagesApi } from './messagesSlice.js'
 import { thunk } from 'redux-thunk'
@@ -16,4 +16,4 @@ export const store = configureStore({
       .concat(messagesApi.middleware)
       .concat(channelsApi.middleware)
   },
-});
+})

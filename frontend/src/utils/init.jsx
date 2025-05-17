@@ -1,3 +1,4 @@
+/* global process */
 import React from 'react'
 import App from '../App'
 import { io } from 'socket.io-client'
@@ -18,7 +19,6 @@ const rollbarConfig = {
 
 const init = async () => {
   const initializeApp = () => {
-    // слушатели событий сервера.
     const socket = io()
     socket.on('newMessage', (message) => {
       store.dispatch(
