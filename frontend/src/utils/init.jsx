@@ -10,7 +10,8 @@ import { I18nextProvider, initReactI18next } from 'react-i18next'
 import i18next from 'i18next'
 import { Provider } from 'react-redux'
 import { Provider as RollBarProvider } from '@rollbar/react'
-import resources from '../locales/ru/translation.json'
+import en from '../locales/en/translation.json'
+import ru from '../locales/ru/translation.json'
 
 const rollbarConfig = {
   accessToken: process.env.REACT_APP_ROLLBAR_ACCESS_TOKEN,
@@ -44,8 +45,16 @@ const init = async () => {
   const i18n = i18next.createInstance()
 
   await i18n.use(initReactI18next).init({
-    resources,
+    resources: {
+      en: { translation: en },
+      ru: { translation: ru },
+    },
+    lng: 'ru',
     fallbackLng: 'ru',
+    debug: true,
+    interpolation: {
+      escapeValue: false, // React уже экранирует текст
+    },
   })
 
   return (
@@ -60,5 +69,7 @@ const init = async () => {
     </RollBarProvider>
   )
 }
+
+// export default i18next
 
 export default init // чтобы убрать ошибку 'init assigned but never used' в eslint

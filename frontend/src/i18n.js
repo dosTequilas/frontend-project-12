@@ -17,3 +17,6 @@ i18next.use(initReactI18next).init({
 })
 
 export default i18next
+// починить i18n
+// невалидный url?
+// мб front/package.json?
