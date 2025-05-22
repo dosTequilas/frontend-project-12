@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
-import Signup from './components/Signup'
-import Login from './components/Login'
-import NotFound from './components/NotFound'
-import Chat from './components/Chat'
+import Signup from './components/Signup.jsx'
+import Login from './components/Login.jsx'
+import NotFound from './components/NotFound.jsx'
+import Chat from './components/Chat.jsx'
 import { ToastContainer } from 'react-toastify' // импортируем ToastContainer из react-toastify
 import 'react-toastify/dist/ReactToastify.css' // подключаем стили для react-toastify
 import Header from './components/Navbar'

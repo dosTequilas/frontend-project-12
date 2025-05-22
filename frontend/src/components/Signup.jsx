@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux'
-import { setAuthData } from '../store/authSlice'
+import { setAuthData } from '../store/authSlice.js'
 import { Link, useNavigate } from 'react-router-dom'
 import * as Yup from 'yup'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
