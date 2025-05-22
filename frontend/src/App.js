@@ -5,7 +5,7 @@ import NotFound from './components/NotFound.jsx'
 import Chat from './components/Chat.jsx'
 import { ToastContainer } from 'react-toastify' // импортируем ToastContainer из react-toastify
 import 'react-toastify/dist/ReactToastify.css' // подключаем стили для react-toastify
-import Header from './components/Navbar'
+import Header from './components/Navbar.jsx'
 import { ErrorBoundary } from '@rollbar/react'
 
 const PrivateRoute = ({ element: Element }) => {
