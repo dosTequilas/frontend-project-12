@@ -7,9 +7,6 @@ const uiSlice = createSlice({
     selectedChannelId: null,
   },
   reducers: {
-    setSelectedChannelId: (state, action) => {
-      state.selectedChannelId = action.payload
-    },
   },
   extraReducers: (builder) => {
     builder.addMatcher(
@@ -28,5 +25,4 @@ const uiSlice = createSlice({
   },
 })
 
-export const { setSelectedChannelId } = uiSlice.actions
 export default uiSlice.reducer
