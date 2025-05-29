@@ -1,9 +1,10 @@
-import { useDispatch } from 'react-redux'
-import { setAuthData } from '../store/authSlice.js'
+// import { useDispatch } from 'react-redux' /- тестируем хук
+// import { setAuthData } from '../store/authSlice.js'/- тестируем хук
+// import axios from 'axios'
+import useAuth from '../hooks/useAuth'
 import { Link, useNavigate } from 'react-router-dom'
 import * as Yup from 'yup'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
-import axios from 'axios'
 import {
   Form as BootstrapForm,
   Button,
@@ -14,7 +15,8 @@ import {
 import { useTranslation } from 'react-i18next'
 
 const Signup = () => {
-  const dispatch = useDispatch()
+  // const dispatch = useDispatch() /- тестируем хук
+  const { signup } = useAuth() // - тестируем хук
   const navigate = useNavigate()
 
   const initialValues = {
@@ -38,19 +40,10 @@ const Signup = () => {
 
   const onSubmit = async (values, { setSubmitting, setErrors }) => {
     try {
-      const response = await axios.post('/api/v1/signup', {
+      await signup({
         username: values.username,
         password: values.password,
       })
-
-      // Диспатчим action для сохранения данных в Redux и localStorage
-      dispatch(
-        setAuthData({
-          token: response.data.token,
-          username: values.username,
-        }),
-      )
-
       navigate('/chat')
     }
     catch (error) {
