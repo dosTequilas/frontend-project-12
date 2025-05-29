@@ -7,6 +7,7 @@ import { ToastContainer } from 'react-toastify' // импортируем ToastC
 import 'react-toastify/dist/ReactToastify.css' // подключаем стили для react-toastify
 import Header from './components/Navbar.jsx'
 import { ErrorBoundary } from '@rollbar/react'
+import routes from './routes.js'
 
 const PrivateRoute = ({ element: Element }) => {
   const isAuthenticated = () => !!localStorage.getItem('token')
@@ -23,11 +24,11 @@ function App() {
         <Header />
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<PrivateRoute element={Login} />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="*" element={<NotFound />} />
-            <Route path="chat" element={<PrivateRoute element={Chat} />} />
+            <Route path={routes.root()} element={<PrivateRoute element={Login} />} />
+            <Route path={routes.login()} element={<Login />} />
+            <Route path={routes.signup()} element={<Signup />} />
+            <Route path={routes.notFound()} element={<NotFound />} />
+            <Route path={routes.chat()} element={<PrivateRoute element={Chat} />} />
           </Routes>
         </BrowserRouter>
       </div>
