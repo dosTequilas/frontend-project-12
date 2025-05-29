@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import AddChannelModal from './modals/AddChannelModal.jsx'
 import RenameChannelModal from './modals/RenameChannelModal.jsx'
 import RemoveChannelModal from './modals/RemoveChannelsModal.jsx'
-import { messagesApi } from '../services/messagesSlice.js'
+import { messagesApi } from '../services/messagesApi.js'
 import Messages from './Messages.jsx'
 import { ChannelsList } from './ChannelsList.jsx'
 import { Container, Row, Col } from 'react-bootstrap'
@@ -16,11 +16,11 @@ import {
   useAddChannelMutation,
   useRemoveChannelMutation,
   useRenameChannelMutation,
-} from '../services/channelSlice.js'
+} from '../services/channelApi.js'
 import {
   useGetMessagesQuery,
   useSendMessageMutation,
-} from '../services/messagesSlice.js' // хуки RTK query
+} from '../services/messagesApi.js' // хуки RTK query
 
 const ChatPage = () => {
   // получаем данные от сервера через хуки RTK Query
