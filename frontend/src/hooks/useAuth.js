@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux'
-import { setAuthData } from '../store/authSlice'
+import { setAuthData } from '../store/authSlice.js'
 import axios from 'axios'
 
 const useAuth = () => {
