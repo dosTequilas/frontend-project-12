@@ -26,7 +26,6 @@ const Messages = ({
     return messageChannelId === currentChannel?.id
   })
 
-  // i18n
   const { t } = useTranslation()
 
   return (

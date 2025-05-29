@@ -11,6 +11,7 @@ import { Provider } from 'react-redux'
 import { Provider as RollBarProvider } from '@rollbar/react'
 import en from '../locales/en/translation.json'
 import ru from '../locales/ru/translation.json'
+import leoProfanity from 'leo-profanity'
 
 const rollbarConfig = {
   accessToken: process.env.REACT_APP_ROLLBAR_ACCESS_TOKEN,
@@ -20,6 +21,8 @@ const rollbarConfig = {
 const init = async () => {
   const initializeApp = () => {
     const socket = io()
+    leoProfanity.loadDictionary('en')
+    leoProfanity.add(leoProfanity.getDictionary('ru'))
     socket.on('newMessage', (message) => {
       store.dispatch(
         messagesApi.util.updateQueryData('getMessages', undefined, (draft) => {

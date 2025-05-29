@@ -10,7 +10,6 @@ export const ChannelsList = ({
   setShowRemoveChannelModal,
   setShowRenameChannelModal,
 }) => {
-  // i18n
   const { t } = useTranslation()
 
   return (
