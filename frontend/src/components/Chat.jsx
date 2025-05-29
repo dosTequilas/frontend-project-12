@@ -9,8 +9,7 @@ import { ChannelsList } from './ChannelsList.jsx'
 import { Container, Row, Col } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-// import Filter from 'leo-profanity'
-// import leoProfanity from 'leo-profanity'
+import leoProfanity from 'leo-profanity'
 
 import {
   useGetChannelsQuery,
@@ -22,9 +21,6 @@ import {
   useGetMessagesQuery,
   useSendMessageMutation,
 } from '../store/messagesSlice' // хуки RTK query
-
-// Filter.loadDictionary('ru')
-// Filter.loadDictionary('en')
 
 const ChatPage = () => {
   // получаем данные от сервера через хуки RTK Query
@@ -119,7 +115,7 @@ const ChatPage = () => {
     }
 
     // Фильтрация сообщения
-    const cleanMessage = Filter.clean(newMessage)
+    const cleanMessage = leoProfanity.clean(newMessage)
 
     try {
       await sendMessage({
