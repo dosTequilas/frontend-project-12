@@ -16,7 +16,7 @@ import {
   useAddChannelMutation,
   useRemoveChannelMutation,
   useRenameChannelMutation,
-} from '../store/channelSlice.js'
+} from '../services/channelSlice.js'
 import {
   useGetMessagesQuery,
   useSendMessageMutation,
