@@ -20,7 +20,7 @@ import {
 import {
   useGetMessagesQuery,
   useSendMessageMutation,
-} from '../store/messagesSlice' // хуки RTK query
+} from '../services/messagesSlice.js' // хуки RTK query
 
 const ChatPage = () => {
   // получаем данные от сервера через хуки RTK Query
